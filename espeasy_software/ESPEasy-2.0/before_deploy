@@ -1,0 +1,42 @@
+#!/bin/bash
+
+VERSION=$(git describe)
+
+#Naming convention:
+# ESP_Easy_[github version]_[plugin set]_[chip type]_[flash memory].bin
+
+
+for ENV in \
+  normal_ESP8266_1024 \
+  normal_ESP8266_4096 \
+  normal_ESP8285_1024 \
+  normal_ESP8266_1024_DOUT \
+  test_ESP8266_1024\
+  test_ESP8266_4096\
+  test_ESP8266_4096_VCC\
+  test_ESP8285_1024\
+  dev_ESP8266_1024\
+  dev_ESP8266_4096\
+  dev_ESP8285_1024\
+  dev_ESP8266PUYA_1024\
+  dev_ESP8266PUYA_1024_VCC;\
+do
+  echo
+  echo "### Deploying environment $ENV for version $VERSION"
+  BIN=.pioenvs/$ENV/firmware.bin
+  cp $BIN dist/"ESP_Easy_$VERSION""_$ENV.bin"
+done
+
+
+#create a source structure that is the same as the original ESPEasy project (and works with the howto on the wiki)
+rm -rf dist/Source 2>/dev/null
+mkdir dist/Source
+cp -r lib dist/Source/
+cp -r src dist/Source/
+cp platformio.ini dist/Source/
+
+cd dist
+
+echo
+echo "### Creating zip archive"
+zip ../ESPEasy_$VERSION.zip -r .

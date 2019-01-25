@@ -1,0 +1,199 @@
+<html>
+  <head>
+    <title>ReefLight</title>
+    <script src='jquery-3.3.1.js'></script>
+    <script src='highcharts.js'></script>
+    <script src='highcharts-more.js'></script>
+    <script src='highcharts-draggable-points.js'></script>
+
+    <script>
+    // global variables
+    var jsonBak; // incoming json from server
+    var chart; // chart for the schedule page
+    </script>
+    <link rel='stylesheet' href='style.css'/>
+  </head>
+  <body>
+    <div id='chart_container' style='height: 500px;'></div>
+    <button onclick='deletePoint();'>Delete Point</button>
+    <button onclick='addPoint();'>Add Point</button>
+    <button onclick='savePoints();'>Save</button>
+    <script>
+      
+    function strToDateUTC(str) {
+      var partsOfStr = str.split(':');
+      switch(partsOfStr.length) {
+        case 2:
+          return Date.UTC(2000,0,0,partsOfStr[0],partsOfStr[1],0);
+        case 3:
+          return Date.UTC(2000,0,0,partsOfStr[0],partsOfStr[1],partsOfStr[2]);
+        default:
+          alert("invalid Str to dateUTC");
+          return Date.UTC(2000,0,0,0,0,0);
+      }
+    }
+    function format_two_digits(n) {
+        return n < 10 ? '0' + n : n;
+    }
+    function dateUTCToStr(d) {
+      d = new Date(d);
+      hours = format_two_digits(d.getUTCHours());
+      minutes = format_two_digits(d.getUTCMinutes());
+      seconds = format_two_digits(d.getUTCSeconds());
+      return hours + ":" + minutes + ":" + seconds;
+    }
+
+
+    // create chart
+    function create_chart() {
+      console.log('create empty chart');
+      chart = new Highcharts.Chart({
+        chart: {
+            renderTo: 'chart_container',
+            animation: false,
+            plotBorderWidth: 1,
+            height: 500,
+            width: 1200,
+        },
+        title: {
+          text: null
+        },
+        tooltip: {
+          headerFormat: '<b>{series.name}</b><br>',
+          //xDateFormat: '%M:%S',
+          pointFormat: 'time:   {point.x:%H:%M}<br>value: {point.y:.2f}%'
+        },
+        xAxis: {
+          type: 'datetime',
+          max: strToDateUTC('23:59:59'),
+          min: strToDateUTC('00:00:00'),
+          gridLineWidth: 1,
+          tickInterval: 1*60*60*1000,
+          labels: {
+            format: '{value:%H:%M}'
+          },
+        },
+        yAxis: {
+          max: 100,
+          min: 0,
+          gridLineWidth: 1,
+          labels: {
+            format: '{value}%'
+          }
+        },
+      });
+    }
+ 
+    function load_data() {
+      jQuery.getJSON('data.json', 
+      function(json){
+        console.log('received JSON:');
+        console.log(json);
+        
+        jsonBak = json;
+        // create chart
+        create_chart();
+        // add data
+        console.log('add data to chart')
+        for(c=0;c<json.channels.length;c++) {
+          channel = json.channels[c]
+          if(!channel.moonlight && !channel.manual) {
+            console.log('for channel '+c);
+            data = new Array();
+            for(i=0;i<channel.dataPoints.length;i++) {
+              data.push([ 
+                strToDateUTC(channel.dataPoints[i][0]),
+                channel.dataPoints[i][1]
+              ]);
+            }
+            chart.addSeries({
+              type: 'line',
+              name: channel.name,
+              color: channel.color,
+              cursor: 'move',
+              marker: {
+                enabled: true
+              },
+              draggableX: true,
+              draggableY: true,
+              dragMinX: strToDateUTC('00:00:00'),
+              dragMaxX: strToDateUTC('23:59:59'),
+              dragMinY: 0,
+              dragMaxY: 100,
+              allowPointSelect: true,
+              data: data,
+            });          
+          }
+        }
+        // add current time
+        chart.xAxis[0].addPlotLine({
+          color: '#FF0000',
+          width: 2,
+          value:  strToDateUTC(json.serverTime)
+        }); 
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) { 
+        alert('getJSON request failed! ' + textStatus); 
+      });
+    }
+    
+    
+    // adds a point
+    function addPoint() {
+      p = chart.getSelectedPoints();
+      if (p.length == 0) {
+        window.alert('Select a point of the channel you want to add a point');
+        return;
+      }
+      if(p[0].series.data.length >= 20) {
+        window.alert('Maximal number of points for the channel reached');
+        return;    
+      }
+      series_ = p[0].series._i; 
+      chart.series[series_].addPoint([strToDateUTC('23:00'), 10]);
+    }
+    
+    // removes the selected point
+    function deletePoint() {
+      p = chart.getSelectedPoints();
+      if (p.length == 0) {
+        window.alert('Select the point first you want to delete');
+        return;
+      }
+      series_ = p[0].series._i;
+      number_ = p[0].index;
+      if(chart.series[series_].points.length <= 1) {
+        window.alert('Can\'t delete last point of series');
+        return;       
+      }
+      chart.series[series_].removePoint(number_)
+    }
+    
+    // saves the new points
+    function savePoints() {
+      c_chart = 0
+      for(c=0;c<chart.series.length;c++) {
+        if(!jsonBak.channels[c].moonlight) {
+          jsonBak.channels[c].dataPoints = [];
+          for(i=0;i<chart.series[c].data.length;i++) {
+            jsonBak.channels[c].dataPoints.push([
+              dateUTCToStr(chart.series[c_chart].data[i].x),
+              chart.series[c_chart].data[i].y
+            ]);
+          }
+          c_chart++;
+        }
+      }
+      
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("POST", "/saveConfig");
+      xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xmlhttp.send(JSON.stringify(jsonBak));
+      
+      load_data();
+    }
+    
+    load_data();
+    </script>
+  </body>
+</html>

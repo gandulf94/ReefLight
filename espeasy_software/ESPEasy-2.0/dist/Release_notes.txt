@@ -1,0 +1,1316 @@
+-------------------------------------------------
+Changes in release v2.0-20180510 (since v2.0-20180322)
+-------------------------------------------------
+
+Release date: Thu May 10 04:00:27 CEST 2018
+
+Gijs Noorlander (1):
+      Revert "Update _P045_MPU6050.ino"
+
+Maarten Paauw (1):
+      Update _P045_MPU6050.ino
+
+
+-------------------------------------------------
+Changes in release v2.0-20180322 (since v2.0-20180321)
+-------------------------------------------------
+
+Release date: Thu Mar 22 04:00:24 CET 2018
+
+Bartlomiej Zimon (3):
+      - P012 fix command interpretation
+      - P023 fix command interpretation
+      - P048 fetch params only when needed
+
+TD-er (4):
+      - P035 move strings to flash
+      [wifi] Make more robust checks and increase timeout
+      [Memory] parseTemplate did not check if markers were found
+      [WiFi] Take much more time for initial WiFi connect during setup
+
+s0170071 (1):
+      Serial WD crash
+
+
+-------------------------------------------------
+Changes in release v2.0-20180321 (since v2.0-20180320)
+-------------------------------------------------
+
+Release date: Wed Mar 21 04:00:21 CET 2018
+
+Gijs Noorlander (1):
+      [merge issue] Forgotten #endif in merge
+
+Unknown (1):
+      [wifi] Setup with factory settings could not complete
+
+
+-------------------------------------------------
+Changes in release v2.0-20180320 (since v2.0-20180319)
+-------------------------------------------------
+
+Release date: Tue Mar 20 04:00:23 CET 2018
+
+Unknown (2):
+      Revert "Merge pull request #1116 from TD-er/feature/allow_own_defaults"
+      [issue #1097] WiFi connect with deepsleep enabled trigger watchdog reset
+
+es-ka (1):
+      Fix wiring description for SN75176 transceiver
+
+
+-------------------------------------------------
+Changes in release v2.0-20180319 (since v2.0-20180316)
+-------------------------------------------------
+
+Release date: Mon Mar 19 04:00:24 CET 2018
+
+Gijs Noorlander (6):
+      Add download button for current rule set (#1102)
+      - add encoder write command #1086 (#1103)
+      Changed so that running all tasks immediately with deep sleep enabled… (#1110)
+      Merge pull request #1112 from uzi18/fix-p073
+      Merge pull request #1114 from TD-er/feature/wifi_details_json
+      Merge pull request #1118 from TD-er/bugfix/mqtt_publish_after_deep_sleep
+
+Unknown (3):
+      Merge pull request #1113 from TD-er/feature/reduce_impact_wifi_disconnect
+      Merge pull request #1116 from TD-er/feature/allow_own_defaults
+      [merge] MIssing #endif due to merging.
+
+
+-------------------------------------------------
+Changes in release v2.0-20180316 (since v2.0-20180313)
+-------------------------------------------------
+
+Release date: Fri Mar 16 04:00:23 CET 2018
+
+Bartlomiej Zimon (1):
+      Merge branch 'mega' of github.com:letscontrolit/ESPEasy into mega
+
+Gijs Noorlander (3):
+      MCP3221 allow values for calibration (#1073)
+      [issue #1066] Fix Webserver handle_control (#1079)
+      Fixed multi instance problem on SHT3x #433 (#1081)
+
+Unknown (5):
+      - move all structs from ESPEasy.ino into header file
+      [v2.0 split globals] Base split on v2.0 version of ESPEasy.ino
+      [issue #1057] AM PM display issue
+      [issue #993] variable in MQTT subscribe topic
+      [issue #951] Changed System#Initialized  => System#Wake
+
+mvdbro (4):
+      #893 part1, send messages
+      Custom controller GUI option
+      #893, part 2 receiving
+      Rules fix
+
+
+-------------------------------------------------
+Changes in release v2.0-20180313 (since v2.0-20180312)
+-------------------------------------------------
+
+Release date: Tue Mar 13 04:00:23 CET 2018
+
+Bartlomiej Zimon (2):
+      - fix for #1065
+      - remove double trimm()
+
+
+-------------------------------------------------
+Changes in release v2.0-20180312 (since v2.0-20180311)
+-------------------------------------------------
+
+Release date: Mon Mar 12 04:00:19 CET 2018
+
+Unknown (3):
+      [issue #1039 ] Change CSS to show topmost SSID on large screens
+      [webserver] Improve chunked transfer
+      Rule Engine minor fix and added dev debugging
+
+
+-------------------------------------------------
+Changes in release v2.0-20180311 (since v2.0-20180310)
+-------------------------------------------------
+
+Release date: Sun Mar 11 04:00:19 CET 2018
+
+Unknown (10):
+      Improve flash read performance
+      Add read buffer to rule processing to speedup parsing
+      Final ruleset speed-up
+      [AM/PM] Am/Pm notation doesn't have '0' hours
+      Update P07 Plugin
+      [P073] Remove tm1637_bitDelay()
+      [deepsleep] Make sure the 'shortcut' of running all services when sleep enabled
+      [OLED] fix drawProgressBar
+      [DNS lookup] Controllers sometimes try to connect to 0.0.0.0
+      [issue #1039] Topmost SSID are covered on mobile Browser
+
+mvdbro (1):
+      Rule Engine, stop waisting time on non matching rules
+
+
+-------------------------------------------------
+Changes in release v2.0-20180310 (since v2.0-20180309)
+-------------------------------------------------
+
+Release date: Sat Mar 10 04:00:20 CET 2018
+
+Unknown (2):
+      Move plugin init before WiFi init
+      [Conversions] Use more decimals in conversions and add AM/PM for time.
+
+
+-------------------------------------------------
+Changes in release v2.0-20180309 (since v2.0-20180307)
+-------------------------------------------------
+
+Release date: Fri Mar  9 04:00:22 CET 2018
+
+Unknown (3):
+      [Rule Events] Add a number of events to handle in rules and awake timer
+      [issue #1015] Add other simple conversions like Celsius to Fahrenheit, etc.
+      [issue #1015] Add other simple conversions like Celsius to Fahrenheit, etc.
+
+
+-------------------------------------------------
+Changes in release v2.0-20180307 (since v2.0-20180306)
+-------------------------------------------------
+
+Release date: Wed Mar  7 04:00:21 CET 2018
+
+Gijs Noorlander (1):
+      [CSS] Quick fix for smaller displays (#1026)
+
+Unknown (1):
+      [issue #1012] Removed Content-Length header + improved webserver speed
+
+
+-------------------------------------------------
+Changes in release v2.0-20180306 (since v2.0-20180305)
+-------------------------------------------------
+
+Release date: Tue Mar  6 04:00:17 CET 2018
+
+Gijs Noorlander (1):
+      Fixes P073 plugin for latest TM1637 based 7 segments displays modules (#996) (#1022)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180305 (since v2.0-20180304b)
+-------------------------------------------------
+
+Release date: Mon Mar  5 04:00:20 CET 2018
+
+Unknown (2):
+      [issue #528] Set DOUT flash mode for all 1M builds
+      [issue #1003 ] Add conversion of wind direction to string
+
+
+-------------------------------------------------
+Changes in release v2.0-20180304b (since v2.0-20180304)
+-------------------------------------------------
+
+Release date: Sun Mar  4 18:20:49 CET 2018
+
+Edwin Eefting (1):
+      dont build in silent mode to prevent travis timeouts
+
+
+-------------------------------------------------
+Changes in release v2.0-20180304 (since v2.0-20180303)
+-------------------------------------------------
+
+Release date: Sun Mar  4 04:00:19 CET 2018
+
+Gijs Noorlander (2):
+      Merge pull request #1000 from uzi18/test3  (more comparisions in IF condition)
+      _P072_HDC1080 allow to send values to the controllers (#999)
+
+Unknown (2):
+      [issue #993] Add %unit% variable in MQTT subscribe topic
+      [issue #892 ] Only use sensor type when really needed
+
+
+-------------------------------------------------
+Changes in release v2.0-20180303 (since v2.0-20180302)
+-------------------------------------------------
+
+Release date: Sat Mar  3 04:00:19 CET 2018
+
+Unknown (5):
+      revert json to non-chunking #988 from s0170071/mega
+      [issue #293] json output nan values not double quoted
+      Add Task device type to json by @s0170071
+      [Issue #827] MQTT not using proper case for %sysname% variable.
+      Add AND/OR to rules & prevent unwanted case changes in strings (#994)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180302 (since v2.0-20180228)
+-------------------------------------------------
+
+Release date: Fri Mar  2 04:00:21 CET 2018
+
+Bartłomiej Zimoń (4):
+      provide System@Sleep event (#875)
+      add format #O to templates to show OFF/ON instead 0/1 (#949)
+      fix #964, add timeStringToSeconds and use it to compare time conditions (#965)
+      add format #O to templates to show OFF/ON instead 0/1 (#949)
+
+Gijs Noorlander (1):
+      Merge pull request #983 from kahvm/mega
+
+Unknown (4):
+      [issue #914] _P053_PMSx003 Dust Sensor looses sync
+      [issue #914] Check first 2 bytes of packet
+      [Build error fix] Must-keep-focus-when-pressing-buttons...
+      [webserver] Layout of code to improve readability
+
+mvdbro (1):
+      Rule wildcard option on literal events
+
+s0170071 (1):
+      Add Factory Reset button to web interface (#954)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180228 (since v2.0-20180227)
+-------------------------------------------------
+
+Release date: Wed Feb 28 04:00:19 CET 2018
+
+Gijs Noorlander (2):
+      [issue #966] Add %sysweekday% and  %sysweekday_s% (#973)
+      [issue #968] Use template parser for OLED commands (#974)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180227 (since v2.0-20180226)
+-------------------------------------------------
+
+Release date: Tue Feb 27 04:00:22 CET 2018
+
+Edwin Eefting (2):
+      [test suite] changes from mega to 2.0
+      [test suite] changes from mega to 2.0
+
+Gijs Noorlander (1):
+      [BuildError] StreamingBuffer code cleanup + fix order member initialize (#961)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180226 (since v2.0-20180221)
+-------------------------------------------------
+
+Release date: Mon Feb 26 04:00:21 CET 2018
+
+Bartłomiej Zimoń (1):
+      provide System@Sleep event (#875) (#931)
+
+Edwin Eefting (1):
+      device page doesnt need next/previous page buttons anymore
+
+Gijs Noorlander (6):
+      [MQTT] LWT "Connected" message doesn't have the retained flag (#925)
+      [v2.0] Added Vcc-binaries to deploy process #933 (#935)
+      [v2.0 merge] 2kwebserver_merge_to_mega #929 (#934)
+      [v2.0] Use ESPeasySoftwareSerial (#936)
+      [timeouts] Improve response when hosts are not reachable (#939)
+      [2k Webserver] Proper initialisation of StreamingBuffer members. (#941)
+
+Unknown (1):
+      [ping lib] Added ping library
+
+s0170071 (2):
+      V20 Webserver@LowMemory
+      Update WebServer.ino
+
+
+-------------------------------------------------
+Changes in release v2.0-20180221 (since v2.0-20180220)
+-------------------------------------------------
+
+Release date: Wed Feb 21 04:00:20 CET 2018
+
+Edwin Eefting (1):
+      apply PUYA patch to all available frameworks
+
+Gijs Noorlander (1):
+      [issue #899 ] Backport of DHT22 implementation on Mega (#913)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180220 (since v2.0-20180219)
+-------------------------------------------------
+
+Release date: Tue Feb 20 04:00:19 CET 2018
+
+Edwin Eefting (1):
+      SENSOR_TYPE_TEMP_BARO changed, was probably implemented incorrectly before
+
+Gijs Noorlander (3):
+      [isue #877] Add VCC enable firmware file to release list (#894)
+      [Cleanup] Move String manipulating functions to single file (#895)
+      [issue #893] Fix globalSync not working when no controllers active (#896)
+
+Unknown (3):
+      [issue #847] Fix last letter of command is cut in OpenHAB MQTT
+      [Event Log] Add event name to event processing time log
+      [issue #899] DHT22 readings not received
+
+
+-------------------------------------------------
+Changes in release v2.0-20180219 (since v2.0-20180218)
+-------------------------------------------------
+
+Release date: Mon Feb 19 04:00:19 CET 2018
+
+Gijs Noorlander (2):
+      [issue #885] MAC address as system variable (#887)
+      [issue #890] Split overlap for both Domoticz controllers to helper (#891)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180218 (since v2.0-20180217)
+-------------------------------------------------
+
+Release date: Sun Feb 18 04:00:11 CET 2018
+
+Gijs Noorlander (1):
+      [issue #847 ] OpenHAB MQTT rewrite topic parser (#886)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180217 (since v2.0-20180214)
+-------------------------------------------------
+
+Release date: Sat Feb 17 04:00:18 CET 2018
+
+Gijs Noorlander (4):
+      [issue 866] Try to stop logging to serial when serial is not read. (#868)
+      [issue #853] Favicon.ico (#874)
+      [OLED Framed] ESP Easy logo (#876)
+      [issue #869] Added 'LWT' to last will topic and improved CPU load (#883)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180214 (since v2.0-20180213)
+-------------------------------------------------
+
+Release date: Wed Feb 14 04:00:21 CET 2018
+
+Edwin Eefting (3):
+      workaround for PUYA flash chips with write issues #650
+      travis build fix for PUYA
+      updated deploy script for PUYA
+
+Gijs Noorlander (1):
+      [v2.0] Blynk controller (#865)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180213 (since v2.0-20180212)
+-------------------------------------------------
+
+Release date: Tue Feb 13 04:00:20 CET 2018
+
+Gijs Noorlander (8):
+      [#804] Degree symbol for non-framed OLED display (#835)
+      [issue #839] Add command support for setting contrast for OLED Framed (#841)
+      [P001 Switch] Fix a mixup in previous fix for switch (#845)
+      [v2.0] Fix compile errors on ESP32 (#848)
+      Bugfix/oled framed less memory (#859)
+      Formatting user vars (re-do of PR#482) + enabled check OpenHabMQTT (#851)
+      [issue #825] Change labels and password form for Thingspeak controller (#849)
+      [MQTT] Allow for background tests while waiting for wifi (#860)
+
+soif (1):
+      P012 - Fix/handle lines exceeding LCD width + allow to clear line b4 print (#852)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180212 (since v2.0-20180209)
+-------------------------------------------------
+
+Release date: Mon Feb 12 04:00:22 CET 2018
+
+Gijs Noorlander (1):
+      [Issue #831] Use DOUT flash mode (#834)
+
+soif (1):
+      Add Device Name in /json page (#815)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180209 (since v2.0-20180206)
+-------------------------------------------------
+
+Release date: Fri Feb  9 04:00:26 CET 2018
+
+wdonker (1):
+      Add trigger for rulesprocessing (#826)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180206 (since v2.0-20180203)
+-------------------------------------------------
+
+Release date: Tue Feb  6 05:00:21 CET 2018
+
+Gijs Noorlander (3):
+      Backport OLED framed from mega + support special characters (#818)
+      [issue #817] Added mail header to SMTP (#820)
+      [issue #727] Proper user interface to set DST rules (#823)
+
+soif (1):
+      All Advanced Settings as 'DEFAULT_' Defines (#813)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180203 (since v2.0-20180202)
+-------------------------------------------------
+
+Release date: Sat Feb  3 05:00:20 CET 2018
+
+Grovkillen (1):
+      Update README.md
+
+
+-------------------------------------------------
+Changes in release v2.0-20180202 (since v2.0-20180130)
+-------------------------------------------------
+
+Release date: Fri Feb  2 05:00:23 CET 2018
+
+DatuX (2):
+      Update README.md
+      Update README.md
+
+Gijs Noorlander (3):
+      [issue #794] Add longpulse_ms command (#796)
+      [v2.0] Resource friendly string replacement (#798)
+      [issue #739] Reconnect MQTT when Unit Name has changed. (#803)
+
+soif (5):
+      Fixes invalid '/json' page output format : DateTimeString is now correctly quoted (#802)
+      Fix Syslog : include Hosname instead of Unit Number - now RFC3164 compliant (#805)
+      Allows to define the IP address when in AP Mode (#806)
+      Custom define file (#807)
+      Json page also Shows Git Build (#808)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180130 (since v2.0-20180126)
+-------------------------------------------------
+
+Release date: Tue Jan 30 05:00:23 CET 2018
+
+Edwin Eefting (1):
+      forgot to commit last framed oled display fix
+
+Gijs Noorlander (3):
+      Bugfix/issue 740 allow mqtt as controller 2 3 (#785)
+      [#784] Add %rssi% as system variable (#786)
+      [Log] Clean up of log routines and more intuitive log level input (#788)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180126 (since v2.0-20180124)
+-------------------------------------------------
+
+Release date: Fri Jan 26 05:00:22 CET 2018
+
+Gijs Noorlander (3):
+      [issue #759] Disable Senseair ABC due to firmware issues (#771)
+      [V2.0] Allow IRremoteESP8266 to be built with core 2.4.0 (#773)
+      Update _C007.ino (#774) (#776)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180124 (since v2.0-20180123)
+-------------------------------------------------
+
+Release date: Wed Jan 24 05:00:19 CET 2018
+
+Edwin Eefting (1):
+      fix #718. also update display on save and removed graphical boot logo to conserve space. also fixes #713. (web interface will be non repsonsive during scrolling now, but there is no easy fix for that)
+
+Gijs Noorlander (1):
+      [issue #758] P029 MQTT helper does not log anymore (#764)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180123 (since v2.0-20180122)
+-------------------------------------------------
+
+Release date: Tue Jan 23 05:00:20 CET 2018
+
+Edwin Eefting (5):
+      test suite: now possible to run all tests at once. fixes
+      test suite: espcli can now do stuff for all configured nodes
+      clear custom task and controller settings when selecting a different device or protocol. replaces #762 . fixes #721
+      added easy reboot warning and function to work around several issues
+      request mainpage when checking if reboot is complete
+
+Gijs Noorlander (1):
+      Central function for system variable replacement (#757)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180122 (since v2.0-20180121)
+-------------------------------------------------
+
+Release date: Mon Jan 22 05:00:19 CET 2018
+
+Gijs Noorlander (2):
+      [issue #745] Set IPaddress to 0.0.0.0 when read from empty string (#754)
+      [#732] Only process P029 MQTT helper when enabled (#743)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180121 (since v2.0-20180120)
+-------------------------------------------------
+
+Release date: Sun Jan 21 05:00:12 CET 2018
+
+Edwin Eefting (5):
+      test suite: generelized controller testing in test005
+      cleaned up nodo logging. fixed domotics SENSOR_TYPE_WIND inconsistency
+      test suite: fixed issues, started working on nodo
+      test suite: lots of refactoring and fixing
+      test suite: fixes. testing boot gpio states
+
+
+-------------------------------------------------
+Changes in release v2.0-20180120 (since v2.0-20180119)
+-------------------------------------------------
+
+Release date: Sat Jan 20 05:00:12 CET 2018
+
+Edwin Eefting (2):
+      added QUAD to c002. fixed getBearing and SENSOR_TYPE_WIND.
+      test suite: started on testcase to test all sensor types via the dummy plugin
+
+
+-------------------------------------------------
+Changes in release v2.0-20180119 (since v2.0-20180118)
+-------------------------------------------------
+
+Release date: Fri Jan 19 05:00:18 CET 2018
+
+Edwin Eefting (2):
+      test suite domoticz mqtt + found few fixmes
+      test suite: added dht22
+
+
+-------------------------------------------------
+Changes in release v2.0-20180118 (since v2.0-20180116)
+-------------------------------------------------
+
+Release date: Thu Jan 18 05:00:19 CET 2018
+
+Edwin Eefting (1):
+      refactoring test suite controller stuff
+
+Gijs Noorlander (2):
+      [issue 733] Fix for negative values on MQTT import (#735)
+      [issue 728] Proper reconnect for MQTT controllers (#737)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180116 (since v2.0-20180113)
+-------------------------------------------------
+
+Release date: Tue Jan 16 05:00:21 CET 2018
+
+Edwin Eefting (3):
+      fixed custom build path
+      made test resumable and importable
+      now supports powercycle to test for bugs like #719
+
+Gijs Noorlander (1):
+      [AutoDST] Added Auto DST (Bugfix/v2.0 issue569) (#726)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180113 (since v2.0-20180112)
+-------------------------------------------------
+
+Release date: Sat Jan 13 05:00:20 CET 2018
+
+Edwin Eefting (5):
+      release bot fixes
+      dont make same release twice
+      dont make same release twice
+      ESPEasy v2.0 only supports compiling under arduino core 2.3.0 to prevent issues like #705 when people use Arduino IDE to compile with arduino core 2.4.0
+      testsuite: working on generic http/mqtt controller emulatior receiving
+
+
+-------------------------------------------------
+Changes in release v2.0-20180112 (since v2.0-20180111)
+-------------------------------------------------
+
+Release date: Fri Jan 12 01:56:54 CET 2018
+
+Edwin Eefting (4):
+      added http server emulation and domotics http to testsuite
+      first http domoticz test works
+      testsuite requirements
+      fixed releasebot issues with multiple branches
+
+Gijs Noorlander (2):
+      [Issue 699] Incorrect shown device name (#700)
+      [v2.0 #470] Do not send invalid values to a controller (#701)
+
+
+-------------------------------------------------
+Changes in release v2.0-20180111 (since mega-20180111)
+-------------------------------------------------
+
+Release date: Thu Jan 11 05:00:18 CET 2018
+
+
+-------------------------------------------------
+Changes in release v2.0-20180110 (since mega-20180104)
+-------------------------------------------------
+
+Release date: Wed Jan 10 16:14:23 CET 2018
+
+ESPEasy release bot (1):
+      added releasebot to v2.0 branch
+
+Edwin Eefting (5):
+      changed readme title
+      readme updates
+      actually ignore MQTT messages that are too big.
+      moved mqtt stuff outside of backgroundtasks(). fixes #683 in my test scenario
+      fixed plugin id of "Communication - Kamstrup Multical 401". (accidental octal notation)
+
+Gijs Noorlander (4):
+      [switch] Fixed switch behavior and default settings. (#675)
+      [Flash info] Detailed flash information (#678)
+      Bugfix/v2.0 crash switch (#682)
+      [Adafruit MPR121] Change deprecated name setThreshholds to setThresholds (#685)
+
+chunter1 (1):
+      ABC calibration feature added (#606)
+
+
+-------------------------------------------------
+Changes in release v2.0.0-dev13 (since v2.0.0-dev12)
+-------------------------------------------------
+
+Release date: Tue Jan  2 17:41:19 CET 2018
+
+Edwin Eefting (27):
+      more fixes for #235
+      final fixes for #235, untested. all spiffs errors should be handled now and also show up in logs and webinterface
+      fixed obscure crash caused by not returning a value in #235. we need to adjust compiler flags to detect these kinds of issues.
+      always define PLUGIN_BUILD_NORMAL so normal plugins are compiled
+      cleaned up buildflags and created common build variable
+      solution for better error and warning highlighting when compiling with platformio
+      enabled warnings and started fixing all the warnings to reduce the noise. (because warnings where disabled wasted about 3 hours debugging a simple no-return bug)
+      cleaned up more warnings and fixed a few real bug along the way. #235
+      now using PRAGMA to enable warnings, so that we dont get warnings from core libraries. also warnings will be treated as errors in Travis, this makes approving pull requests less work for me.
+      travis fix
+      worked around error caused by upstream libraries
+      fixes
+      cleaned up notification stuff. fixed #502
+      warnings are treated as errors now, by travis
+      refactored and added automated test stuff
+      examples for the lone wanderer
+      cleaner errors
+      working on test stuff
+      update branching info
+      test library stuff
+      Simple fix for MH-Z19 B version. #529
+      set lcd to NULL by default. #584
+      fix #588. parseTemplate() now only checks enabled taskes for [] macros
+      automaticly updated release notes for v2.0.0-dev13
+      release all binaries by doing the full compile step as last
+      automaticly updated release notes for v2.0.0-dev13
+      still trying to fix travis release scripts..
+
+Gijs Noorlander (9):
+      [INA219] Allow for multiple instances on the same controller (#519)
+      [INA219_v2.0] Improve logs for multiple devices (#546)
+      [LCD plugin] Added check of LCD object before dereferencing it (#584)
+      Move CO2 MH-Z19 plugin from "testing" to "normal" (#618)
+      [DNS/IP] Obey UseDNS setting for all controllers (#629)
+      [v2.0] Add more characters to the list not to escape in URLs (#635)
+      [>49.7 days uptime overflow] Use separate function to compute time differences (#621)
+      [WiFi] Avoid timeouts when not connected to WiFi (#639)
+      [PubSubClient] Bug in handling domainname (#660)
+
+Grovkillen (2):
+      Added categories... (#552)
+      Changed bin file names to be more descriptive. (#597)
+
+Neo (1):
+      [HT16K33_LED] Brightness control (#523)
+
+mvdbro (1):
+      Bugfix: %eventvalue% parsing on literal strings
+
+
+-------------------------------------------------
+Changes in release v2.0.0-dev12 (since v2.0.0-dev11)
+-------------------------------------------------
+
+Release date: Fri Sep 22 01:25:29 CEST 2017
+
+Daniel Tedenljung (1):
+      This plugin is tested and working good. (#428)
+
+Edwin Eefting (6):
+      first set of changes for #235. added spiffs error checking and loging, and cleaner flashguarding code. next change will show feedback in web interface as well. also need to cleanup loose SPIFFS filehandling at other places in webserver.ino (create a save-function for all those things and use FLASH_GUARD)
+      missed return after setting event buffer
+      fixes bug #486 in counter-plugin
+      plugin is not generic enough, so its disabled by default
+      automaticly updated release notes for 2.0.0-dev12
+      fixed release-notes bug
+
+Gerben Meijer (1):
+      Add SENSOR_TYPE_TRIPLE support to Domoticz MQTT (#468)
+
+Gijs Noorlander (1):
+      [MH-Z19] Add 'ABC disable' option to web config (#472)
+
+Jeroen (1):
+      Create _P071_Kamstrup401.ino (#504)
+
+Jochen Krapf (4):
+      Added Plugins for SHT3x and LM75A - Issue #433 (#442)
+      Descriptive GPIO-Names (#448)
+      Rework of Plugin _P056_SDS011-Dust (#451)
+      Fixed HTML text box length for controller settings - Issue #453 (#455)
+
+Ovidiu Schiopu (1):
+      Added _P070_NeoPixel_Clock.ino (#489)
+
+SightofSilence (1):
+      Add files via upload (#493)
+
+beic (2):
+      Moving from Temperature to Environment naming (#492)
+      Moving from Temperature to Environment naming (#506)
+
+mvdbro (4):
+      Custom WEB page handler (SPIFFS)
+      Finished work on Level Control & config
+      Fixed a tasksettings load bug that was introduced with commit dcfc1e3 on july 18th.
+      Moved HTML template logging to level LOG_LEVEL_DEBUG_DEV
+
+papperone (1):
+      HDC1080 plugin (#497)
+
+
+-----------------------------
+Changes in release v2.0.0-dev11
+-----------------------------
+
+Release date: Mon Jul 17 00:55:29 CEST 2017
+
+Daniel Tedenljung (5):
+      Fixed decimal values (#329)
+      Senseair update (#333)
+      Reading error code in other way (#394)
+      Added relay control from commands (#395)
+      Renamed command to be unique. (#427)
+
+DatuX (3):
+      Update README.md
+      Update issue_template.md
+      Update issue_template.md
+
+Edwin Eefting (27):
+      cleaned up RTC initialisation. fixed some fuzzy issues after flashing/factory reset. improved flash-counter messages and added powercycle tips
+      started working on regression testing scripts for The Rig
+      large changes to wifi handling. code cleanup, more efficent connecting, only one connect retry in deepsleep. better serial logging for connections and APmode. always enable ap mode when wifi is disconnected
+      prevent recursion when processing background tasks. might help with issue #117
+      added option do deepsleep on connection failures. had to change boot order a bit, so the rebooted/warmboot message is the first one now. (this also makes more sense). issue #206
+      better rtc error logging
+      Fixed crashbug in email notification
+      Fixed variable naming bug in FEATURE_ADC_VCC
+      working on test framework
+      esptesting framework
+      dont want wifi passwords on github
+      dont want wifi passwords on github
+      converted all commands to python
+      backup
+      saved ~800 bytes ram in handle_devices(), issue #352. left old code commented for reference, in case i created bugs. will remove later
+      accidently enabled FEATURE_ARDUINO_OTA
+      fix #372
+      serial now no longer resonds to empty commands
+      add caching headers to static content
+      upgraded IRremoteESP8266 from v1.0.2 to v1.2.0. fixes #188
+      fix HTTP chunked transfer encoding, since WebServer class doesnt support it. this fixes the 2 second delay in some browsers. (we where out of spec.)
+      more details AP mode serial output
+      made mdns a feature. consitent use of hostname for both mdns and dhcp client. hostname now is name_unitnumber, with spaces replaced by -
+      gave some html logging debug-level
+      imlemented setting name, unit and password via serial. implements #317
+      added note to inverse logic to fix #318
+      automaticly updated release notes for v2.0.0-dev11
+
+Gustavo Spadari (1):
+      Adding comments on RAW code (#386) (#393)
+
+JK (7):
+      First draft
+      Send web page as junked data
+      Accept CR and LF at serial commands
+      First draft
+      Added Plugin for Touch KeyPad Chip TTP229
+      Fine tuning of CSS and menu
+      Reenabled javascript for device-selector
+
+Jochen Krapf (25):
+      Added _P054_DMX512 (#322)
+      Added _P055_Chiming (#323)
+      Added _P056_SDS011-Dust (#324)
+      Added Plugin for Quadrature Encoder Interface (Rotary Encoder) (#335)
+      Added Plugin _P061_KeyPad (#340)
+      Added Plugin _P060_MCP3221 (#342)
+      Formula option for  _P013_HCSR04 plugin issue #343 #313 (#344)
+      Fixed issues #308 #305 (#345)
+      Added Plugin _P062_MPR121_KeyPad (#346)
+      Fixed issue #348 (#349)
+      Added plugins for HT16K33 LED matrix driver and key pad scanner (#328)
+      Increase DEVICES_MAX for more testing and dev plugins (#353)
+      Write default CSS to SPIFFS on boot (#357)
+      Fixed DEVICES_MAX for testing and dev (#374)
+      Step back to style-based-css for speed up + pimp menu (#376)
+      Check plugin-array size on init - issue #119 (#389)
+      Added Plugin for MP3 module (#402)
+      Minor corrections and documentation (#404)
+      Added Plugin for Gesture Sensor APDS9960 (#409)
+      Added Plugin for Color Sensor VEML6040 (#412)
+      Added Plugin for HX711 Load Cell - Request #408 (#415)
+      Fixed multiline define bug on CRLF (#416)
+      Added Value Logger on SD Card (#429)
+      Plugin65 MP3 - volume updated in device menu - issue #424 (#438)
+      Plugin HX711 - Added Tare function (#419)
+
+PieVo (1):
+      Update P053 (PMSx003) to support software serial and minor cleanup (#390)
+
+SloMusti (3):
+      fixed deep sleep, such that it can be enabled from Rules (#375)
+      Implemented a better WiFI AP naming strategy. ESP_Easy has replaced the newdevice text as the default name and now the name is used as and AP SSID (#410)
+      added mDNS implementation (#418)
+
+elucas2uy (1):
+      FIX Pass and Index on handle_controllers() (#331)
+
+imthemichi (1):
+      Plugin_008-RFID extended with wiegand 34-bits and key-pad (#387)
+
+krikk (5):
+      changed the ina219 plugin so that is always sends 3 values, voltage, current, power... like a normal plugin should do... (#325)
+      delay option should be displayed even if the SendDataOption is false, because the delay option also controls the refresh rate of the oled display... fixes issue #336 (#339)
+      seconds were displayed without leading zero issue #337 (#338)
+      added local ip to sysinfo plugin, due to limitation of return type float, i had to split up the ip in its octets... fixes issue #228 (#341)
+      implemented a measurement type selection to retain backward compability to Domoticz... hope this works... (#351)
+
+mvdbro (8):
+      Fix Domoticz helper plugin  #330
+      Enlarge MQTT buffer for Domoticz MQTT controller
+      MQTT Controller enable/disable fix (#287)
+      Fix incorrect ADC GPIO display
+      Fix default controller settings (#360)
+      Added pin state buffer table page (mainly for debugging)
+      Update checkRAM function
+      Revert to default ESP Easy colorscheme
+
+papperone (5):
+      Fixed Broken P038
+      p038
+      reverted some changes due to bug fixed in the "webserver.ino #348"
+      P038 - optimization
+      P010 plugin optimization (#403)
+
+tedenda (2):
+      Renamed Prefix from P011 to C011
+      Missed one...
+
+
+-----------------------------
+Changes in release v2.0.0-dev10
+-----------------------------
+
+Release date: Mon May 29 22:53:54 CEST 2017
+
+DatuX (1):
+      Update README.md
+
+Jochen Krapf (1):
+      Rework of plugin ADC (#319)
+
+krikk (1):
+      reverted change, this fix seems to have exactly opposite outcome than expected... with the fix applied i get errors, without is i get no errors... (#320)
+
+
+-----------------------------
+Changes in release v2.0.0-dev9
+-----------------------------
+
+Release date: Sun May 28 15:16:00 CEST 2017
+
+Alex Schwantes (1):
+      Implemented use of addFormSelector methods to _P004_Dallas plugin.     Changed the device select box to show the one wire address for each connected sensor instead of just a number.     Added a blank option to the device address select box so that in the event that multiple devices are present and the configured device is not currently available, the select box will be blank instead of selecting a different device.
+
+Bartlomiej Zimon (5):
+      - Misc: typo
+      Custom Controller Settings - add controller index
+      Push ProtocolIndex and ControllerIndex into CPLUGIN_WEBFORM_SAVE/LOAD
+      Add WifiSSID2,WifiKey2 commands
+      Add backup Wifi network to Settings command
+
+Blair Thompson (1):
+      Added Par4 and Par5 Variables (#248)
+
+Daniel Tedenljung (5):
+      Updated wrong plugin number. (#269)
+      P052: More descriptive  log messages (#283)
+      GUI touchup on Tools (#286)
+      addSubmitButton function added (#289)
+      New look on Tools page (#296)
+
+DatuX (5):
+      Update README.md
+      Update issue_template.md
+      Update CONTRIBUTING.md
+      Update README.md
+      Update README.md
+
+Edwin Eefting (17):
+      cleaned up messagedelay: use the same function everywhere. and do serial processing as well during the messagedelay
+      fixed issue #253 (memory leaks/crashes)
+      more details in memory analyser. run memory analyser via Travis
+      cosmetic buildlog fix
+      publish MQTT Connected message
+      timer boundschecker was off by one. fixed memanalyser total
+      input box fix on setting pages
+      comments. checkudp only in backgroundtasks()
+      reboot and wifidisconnect should be handled by /
+      bugfix in rtc checksum
+      nicer sleep messages
+      fixed a few out of bounds bugs in Misc.ino _P023_OLED.ino _P035_IRTX.ino _P037_MQTTImport.ino with cppcheck. also added cppcheck to travis to prevent such cases in the future
+      fixing cpp check
+      fixing cpp check
+      fixing cpp check
+      fixing cpp check
+      also distribute ESP8285 binaries
+
+JK (5):
+      added functions addCheckBox and addNumericBox
+      added checkbox for status LED inversed
+      fine tuning of status LED and pimp hardware web site
+      solved my commit mismatch
+      Fixed #196 and rework of IDX display
+
+Jochen Krapf (11):
+      Added addForm*-functions for easy web-interface and pimp GUI (#259)
+      Added function addFormSelector (#270)
+      Preliminary final draft of bugfix #264 (#271)
+      Replaced HTML code with addFormSelector() in all plugins (#278)
+      Fixed readUserVarFromRTC() #265 (#280)
+      Limits to NumericBox and a bit of security to PasswordBox (#281)
+      Added HTML templates for customization (#290)
+      Fixed rules bug #297 (#299)
+      Pimp device-GUI and optimized HTML (#306)
+      Fixed some minor HTML syntax bugs (#310)
+      Rework of plugin ADS1115 (#315)
+
+PieVo (1):
+      Plantower (#300)
+
+beic (1):
+      Some little description corrections (#297)
+
+krikk (13):
+      http advanced controller, correct passing of hostname (#250)
+      i2c Temperatur & Humidity Sensor Am2320 (#251)
+      use the new addCheckBox function and better display of device config page
+      another fix to http advanced...
+      replaced static html code with the new addForm* Functions
+      bug fix wrong return type + form function fixes (#266)
+      addFormNumeric with min and max & More Form-Function replacements (#272)
+      make the Settings - Save. Filename more descriptive... (#273)
+      addHelpButton Function and a new Help Button for the Rules and Hardware Page (#282)
+      DHT plugin fix 'NaN' issue (#285)
+      i don't like hidden features, added a json button to the tools menu, next to the advanced button (#292)
+      do a dns lookup on every request, solves issue #261 (#302)
+      AM2320: negative temperature fix... (#312)
+
+tedenda (1):
+      Moving plugin from Playground into main repo. (#262)
+
+
+-----------------------------
+Changes in release v2.0.0-dev8
+-----------------------------
+
+Release date: Mon Apr 24 13:21:32 CEST 2017
+
+DatuX (6):
+      Update README.md
+      Update README.md
+      Update README.md
+      Update CONTRIBUTING.md
+      Update CONTRIBUTING.md
+      Update README.md
+
+David Conran (2):
+      Update IRremoteESP8266 library url in .gitmodules
+      update sendSony() call to use repeats.
+
+Dirk Moeller (2):
+      new function, Plugin_004_DS_setResolution und Plugin_004_DS_getResolution
+      fix typo
+
+Edwin Eefting (36):
+      temporary disabled IR plugins, because of iram1_0_seg issues
+      initial version of memory analyser
+      moved arduinojson and liquidcrytal includes to correct plugins. reanbled IR-modules to solve memory issues
+      make the IRTX plugin work without the IR plugin
+      initial memory analyser and results
+      reduced memory usage _C001
+      reduced mem C001 C002
+      reduced ram usage C003 ... C011
+      reduce memory usage N001 N002
+      cleaned up servo stuff
+      recuded number of pulsecounters from 8 to 4 to save IRAM
+      contributing guidelines
+      fixed crash in C001 (when opening /controllers)
+      avoid static buffers in c001. addLog now also supports F(), so we dont need all those temporary variable definitions
+      removed unneccesay delays from c001
+      avoid unneccesary string conversions and static buffers in c001
+      fixed crashes caused by large MQTT packets
+      fixed lots of common issues that might cause crashes in c011. also see https://github.com/letscontrolit/ESPEasy/issues/117#issuecomment-293713370
+      added issue template to get cleaner bug reports
+      replaced all readstringuntil() with safeReadStringUntil()
+      starting working on stability reporting function
+      fixed stability issues in c009. probably caused by illegal PSTR usage, but i completly cleaned up all string handling
+      improved statusled handling in background tasks
+      converted submodule to normal directory. lib/Adafruit_Motor_Shield_V2 upstream commit ee4c4d334f498d54cdf80c9cc6f5bdec2533f8bf
+      now no longer a submodule lib/AS_BH1750, upstream version 092f0b1c5fa74eb2abe3d1b2925190d066e9506d
+      now no longer a submodule. lib/Adafruit_NeoPixel, upstream version v1.0.6
+      now no longer a submodule, lib/Adafruit_TCS34725 upstream version 1.0.1-13-g12be4c6
+      now no longer a submodule. lib/ArduinoJson upstream version v5.6.4
+      now no longer a submodule. lib/IRremoteESP8266 upstream version v1.0.2
+      oops moved lib/Adafruit_TCS34725 to wrong place
+      select env
+      Revert "Plugin_008-RFID extended with wiegand 34-bits and key-pad (4-bits per key) support". Now uses too much IRAM.
+      dont use arduino OTA in the dev env
+      escape html in the rules page, so that strings like &param do not cause problems. fixes issue #231
+      properly escape html in C011 generic http advanced.
+      fixed #239 due to improper PSTR. cleaned up string handling
+
+Emmanuel Tatto (1):
+      getBearing should be outside the FEATURE_ARDUINO_OTA condition (#207)
+
+Gerben Meijer (1):
+      Extend MH-Z19 sensor support
+
+JK (3):
+      More informative and intuitive status LED
+      Using 3 I/O-pins consequently
+      added union to TaskDevicePin1..3
+
+Jochen Krapf (1):
+      Added function isDeepSleepEnabled() (#177)
+
+adb76 (2):
+      Set BME280 to recommended values for climate / weather sensor
+      BME280: Ensure sensor is in sleep mode to set the config, fix small typo
+
+beic (13):
+      Menu correction, added BMP180 (#199)
+      Added detection for the HTU21D to I2C scenner
+      Environment naming will better fit in...
+      Environment naming will better fit in + HTU21D
+      Environment naming will better fit in... + naming
+      Environment naming will better fit in...
+      Environment naming will better fit in...
+      Environment naming will better fit in...
+      Environment naming will better fit in...
+      Environment naming will better fit in...
+      Little naming correction
+      Naming correction by Datasheet
+      Added detection for the SI1145 to I2C scenner
+
+dev0 (1):
+      _C009.ino: RFC conformity and removed obsolet code (#163)
+
+imthemichi (1):
+      Plugin_008-RFID extended with wiegand 34-bits and key-pad (4-bits per key) support
+
+jbaumann (1):
+      Addition of ESP8285 targets (#187)
+
+krikk (16):
+      motorshield library should be a submodule, enhanced the motorshield plugin... (#162)
+      http advanced: add replacement variable for systime, vcc, ip, sysload, uptime (#167)
+      corrected name for TSL2561, add option to use different sensor adress (#170)
+      re-did old pull requests (#172)
+      Tsl2561 rewrite (#174)
+      I2csoilmoisture fixed bug with sleep mode (#178)
+      Pulsecounter minor fix (#184)
+      rewrote bh1750 sensor based on better library... (#182)
+      cppcheck style fixes... (#186)
+      added i2c address selection to ino219 plugin (#192)
+      Motorshield plugin string fixes (#200) (reduced memory usage)
+      Support for Tcs34725 RGB Color Sensor (#195)
+      _P047_i2c-soil-moisture-sensor: allow change of sensor address (#201)
+      Httpadvanced crashfix + patch method (#204)
+      Bh1750: enhance to check for valid value (#208)
+      removed all unnecessary Strings due to new addLog with FlashStringHelper (#223)
+
+tedenda (1):
+      Update _P049_MHZ19.ino
+
+
+-----------------------------
+Changes in release v2.0.0-dev7
+-----------------------------
+
+Release date: Wed Mar 15 01:42:15 CET 2017
+
+Edwin Eefting (5):
+      timers can be disabled by setting them to 0 now. cleaned up event output logging. added timer out-of-bounds checks
+      added i2scanner via serial. removed spaces from Adafruit Motor Shield library so it works with arduino IDE
+      fixed Arduino IDE compilebug and added help to enable plugin sets in Arduino IDE
+      automaticly updated release notes for v2.0.0-dev7
+      fix in release-script (forgot to commit it last time)
+
+krikk (2):
+      code cleanup for HTTP advanced controller
+      show date in webinterface,  and changed password fields to type=password (#161)
+
+
+
+-----------------------------
+Changes in release v2.0.0-dev6
+-----------------------------
+
+Release date: Mon Mar 13 11:54:41 CET 2017
+
+Edwin Eefting (15):
+      created script to assist in creating releases
+      bug fix: plugin_id should not start with a 0. (compiler interprets this as octal!)
+      Revert "bug fix: plugin_id should not start with a 0. (compiler interprets this as octal!)"
+      bug fix: plugin_id should not start with a 0. (compiler interprets this as octal!)
+      added NDIR CO2 Sensor MH-Z19 plugin to TESTING plugin set
+      remove artificial sensor startup delays. (now all sensors are send immediatly after booting and wifi-connecting)
+      do hardwareinit() earlier so that outputs are set immeadiatly instead of waiting for connect. fixes https://github.com/letscontrolit/ESPEasy/issues/114
+      enable status light as soon as wifi is connected
+      use sizeof instead of magic numbers
+      Implemented speaker and tone functions from https://www.letscontrolit.com/forum/viewtopic.php?f=4&t=343&hilit=speaker&start=10
+      enabled Arduino OTA for dev-firmware only, to ease developing. minor output-tweaks
+      cold boot startup delay
+      major change: changed the timing of the first sensor read after initial boot. cleaned up and improved deep sleeping code.
+      added plugin to testing. remove useless value variable
+      automaticly updated release notes for v2.0.0-dev6
+
+Gerald (2):
+      HTTP Advanced, enhanced, so that only one http request is sent for one sensor (#156)
+      added missing sensor type, to fix problem with i2c soilmoisture sensor... (#157)
+
+Jochen Krapf (1):
+      cancel deep sleep loop by pulling the pin GPIO16(D0) to GND (#158)
+
+dzikus (1):
+      Added BMP280_CONFIG_SETTING to reduce the temperature of sensor and use oversampling filter (#155)
+
+
+
+-----------------------------
+Changes in release v2.0.0-dev5
+-----------------------------
+
+Release date: Sat Mar 11 18:15:59 CET 2017
+
+DatuX (5):
+      Update README.md
+      Update README.md
+      Update README.md
+      Update README.md
+      Update README.md
+
+Edwin Eefting (7):
+      deploy in platformio format
+      simplified string handling and fixed buffer overflow
+      created release notes from R148 to v2.0.0-dev4
+      updated release notes for test1
+      BUILD_GIT is now defined via environement variables
+      use TRAVIS_TAG when building releases
+      automaticly updated release notes for v2.0.0-dev5
+
+Gerald (3):
+      Update _P047_i2c-soil-moisture-sensor.ino
+      one newline to much
+      add missing features from "Generic HTTP" Plugin to "Generic HTTP Advanced" Plugin (#151)
+
+Gustavo Spadari (3):
+      Adding IR received code extra info
+      Rename tmpString to cmdCode for clarity
+      IR RAW Code implementation
+
+JustMe-NL (4):
+      Fix double define
+      Fix Windspeed values
+      Fix broken Domoticz MQTT helper
+      Update WebServer.ino
+
+Nonflammable (1):
+      Extend functionality of P038
+
+krikk (7):
+      new Plugin for SoilMoisturesensor from Tindie (https://www.tindie.com/products/miceuz/i2c-soil-moisture-sensor/)     minor fixes in http advanced to allow sensor type triple and http response 2xx not 200 only
+      version check to detect if sensor is present, optimized address handling
+      added measurement mode selection
+      minor fix, shared variable name with bme280, not good :)
+      variable name collision with adafruit motorshield v2 library, no functional change
+      new plugin for adafruit motorshield v2, still needs a library and only support DC Motors up till now... still room for improvement
+      added function to enable/disable sleep mode and version check
+
+psy0rztest (1):
+      Removed !echo, because its not supported in Windows.
+
+
+---------------------------------
+Changes in v2.0.0-dev4 since R148
+---------------------------------
+
+Edwin Eefting (18):
+      copy from ESPEasyMega commit 33f31e1fc3a9736266e9ee4781947d01808f88d6 but without the file renames
+      bugfix in p036: pointer was not initialized to NULL
+      added git version numbers output
+      _C001 Sent humstat to domoticz
+      fixed logging during first time initialisation
+      factory reset will now always format SPIFFS. earlier boot logging
+      fix factory reset by tx/rx pin double reset issue
+      this was only a temporary test, forgot to remove
+      turn on weblog by default
+      uninitialised var
+      removed systemOK: its not used anymore since SPIFFS support. (when system is not ok, it already did a resetfactory and reboots instead of continuing in emergency mode
+      fixed building on systems other that platformio+linux (by making sure BUILD_GIT is defined)
+      rename to .ino
+      moving source files to src, in preperation of platformio directory structure
+      platformio settings, travis settings, flashtools for windows, deploy script to create release .zip file
+      add libraries as submodules
+      add libraries we slightly modified or that i cant find the repositorys for
+      new deploy key
+
+JustMe-NL (6):
+      Update ESPEasy.ino
+      Update Misc.ino
+      Update _C001.ino
+      Update _C002.ino
+      Create _P045_MPU6050
+      Create _P046_VentusW266
+
