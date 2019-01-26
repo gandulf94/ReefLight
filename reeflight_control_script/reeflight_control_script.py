@@ -1,6 +1,6 @@
 #!/bin/python3
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 import json
 import time
 import datetime
@@ -10,77 +10,80 @@ import threading
 import math
 
 server = Flask(__name__)
-reeflight_json_file = "reeflight.json"
-reeflight_json = {}
-
-mqtt_client_name = "reeflight_script"
-mqtt_broker = "192.168.0.10"
-mqtt_port = 1883
-mqtt_topic = "/reeflight/cmd"
-mqtt_qos = 1
-
-minimum_time_between_updates = 30
+settings_file = "settings.json"
 
 
+# 
+# save, load and print the settings
+#
 
 # prints the actual settings
-def print_reeflight_json():
-  print(json.dumps(reeflight_json,indent=2, sort_keys=True))
+def print_settings():
+  print("settings")
+  print(json.dumps(settings,indent=2, sort_keys=True))
   
 # saves the json to file
-def save_reeflight_json():
+def save_settings():
   print("save json file")
-  with open(reeflight_json_file, "w") as f:
-    json.dump(reeflight_json, f, sort_keys=True, indent=2)
+  with open(settings_file, "w") as f:
+    json.dump(settings, f, sort_keys=True, indent=2)
   
 # load json from file
-def load_reeflight_json():
+def load_settings():
   print("load json file")
-  global reeflight_json
-  with open(reeflight_json_file) as f:
-      reeflight_json = json.load(f)
-  print_reeflight_json()
+  global settings
+  with open(settings_file) as f:
+      settings = json.load(f)
+  print_settings()
+  
+  
+  
+  
+  
+  
   
   
 #
-# webserver handlings on request
+# webserver handling
 #
 
-# index -> manual configuration of the light
+# index -> manual configuration of the different channels
 @server.route('/')
 def serve_index_to_client():
-  return server.send_static_file('index.html')
+  print("a")
+  #return server.send_static_file('index.html')
+  return render_template('index.html')
  
-# saveManual
-@server.route('/saveManual', methods=['GET', 'POST'])
-def save_manual():
-  global reeflight_json
-  reeflight_json = request.json
-  save_reeflight_json()
-  update_reeflight()
-  return ''
- 
-# config -> config of the lightschedule
-@server.route('/config.html')
-def serve_config_to_client():
-  return server.send_static_file('config.html')
+# schedule -> config of the lightschedule
+@server.route('/schedule.html')
+def serve_schedule_to_client():
+  return render_template('schedule.html')
 
-# saves the new configs
-@server.route('/saveConfig', methods=['GET', 'POST'])
-def save_config():
-  global reeflight_json
-  reeflight_json = request.json
-  save_reeflight_json()
-  update_reeflight()
-  return ''
+# config -> config the general settings (number of channels etc.)
+@server.route('/config.html')
+def server_config_to_client():
+  return render_template('config.html')
+  
+
 
 # serves the json file
-@server.route("/data.json")
-def serve_json_data_to_client():
-  global reeflight_json
-  reeflight_json["serverTime"] = time.strftime("%H:%M:%S", time.localtime())
-  return json.dumps(reeflight_json,indent=2, sort_keys=True)
+@server.route("/settings.json")
+def serve_settings_to_client():
+  # adds the localtime
+  settings["server_time"] = time.strftime("%H:%M:%S", time.localtime())
+  return json.dumps(settings,indent=2, sort_keys=True)
   
+# saves the changes from the webserver and applies them
+@server.route('/save', methods=['GET', 'POST'])
+def save():
+  global settings
+  settings = request.json
+  save_settings()
+  update()
+  return ''
+  
+  
+# static files
 # css
 @server.route("/style.css")
 def serve_css_():
@@ -103,6 +106,11 @@ def serve_highcharts_draggable_points_to_client():
 
 
 
+
+
+
+
+
 #
 # mqtt stuff
 #
@@ -110,13 +118,9 @@ def on_connect(client, userdata, flags, rc):
   print("connected to mqtt broker with result code "+str(rc))
   # Subscribing in on_connect() means that if we lose the connection and
   # reconnect then subscriptions will be renewed.
-
-  # start light schedule timer
-  timer.start()
-
   
   
-# repeatedTimer for updating light schedule
+# repeatedTimer for the update function
 class RepeatedTimer(object):
   def __init__(self, interval, function, *args, **kwargs):
     self._timer     = None
@@ -148,101 +152,127 @@ class RepeatedTimer(object):
     self.is_running = False
 
 
-
-def update_reeflight():
-  print('calc_new_values')
-  
+# updates the pwm values and sends them via MQTT
+def update():  
   # current time
   cur_datetime = datetime.datetime.now()
   cur_utc_tm_info = time.gmtime()
-  print("current datetime: %s"%datetime.datetime.now())
+  print("update at %s"%datetime.datetime.now())
   
-  for c,channel in enumerate(reeflight_json['channels']):
+  
+  # loop over all channels
+  for c, channel in enumerate(settings['channels']):
+    
     print("channel %d, %s"%(c,channel["name"]))
     
+    # no update of the percentage in manual mode
     if channel['manual']:
-      print("  manual mode")
-      percentage = channel['manual_percentage']
+      print("  manual mode, no update")
+      percentage = channel["percentage"]
     
-    else:      
-      if channel["moonlight"] == False:
-        print("  regular channel")
-        datetime_list, v_list = [],[]
-        for i in channel["dataPoints"]:
-          # list of datetime.datetime values
-          datetime_list.append(datetime.datetime.combine(cur_datetime.date(),datetime.time(*map(int, i[0].split(':')))))
-          # list of % values
-          v_list.append(float(i[1]))
-          
-        # periodic boundary conditions
-        datetime_list.append(datetime_list[0]+datetime.timedelta(days=1))
-        v_list.append(v_list[0])
-        datetime_list.insert(0,datetime_list[-2]-datetime.timedelta(days=1))
-        v_list.insert(0,v_list[-2])
-
-        for i in range(len(datetime_list)-1):
-          if datetime_list[i] < cur_datetime < datetime_list[i+1]:
-            percentage = v_list[i] + (v_list[i+1]-v_list[i])*((cur_datetime-datetime_list[i])/(datetime_list[i+1]-datetime_list[i]))
-            
-      else:
-        print("  moonlight channel")
-        # create moonlight object
-        moon =  pylunar.MoonInfo(latitude=(49,48,0), longitude=(9,56,0), name="wuerzburg")
-        # feed time (utc time required)
-        moon.update((
-          cur_utc_tm_info.tm_year,
-          cur_utc_tm_info.tm_mon,
-          cur_utc_tm_info.tm_mday,
-          cur_utc_tm_info.tm_hour,
-          cur_utc_tm_info.tm_min,
-          cur_utc_tm_info.tm_sec
-        ))
-        fractional_phase = moon.fractional_phase()
-        print("  fractional phase: %.3f"%(fractional_phase))
-        altitude = moon.altitude()
-        print("  altitude: %.3f°"%(altitude))
+    # normal channel
+    # new percentage updated via interpolation of the data_points
+    if not channel['manual'] and not channel['moonlight']:
+      
+    # normal channel
+    # new percentage updated via interpolation of the data_points
+      print("  regular channel")
+      
+      # interpolate the percentage using the percentage time paires stored in dataPoints
+      
+      # first load percentage and time values into the lists datetime_list and percentage_list
+      datetime_list, percentage_list = [],[]
+      for i in channel["data_points"]:
+        # list of datetime.datetime values
+        datetime_list.append(datetime.datetime.combine(cur_datetime.date(),datetime.time(*map(int, i[0].split(':')))))
+        # list of % values
+        percentage_list.append(float(i[1]))
         
-        percentage = channel["maxMoonlightPercentage"] * fractional_phase * math.sin(altitude)
-        if percentage < 0:
-          percentage = 0
-    # percentage value
-    reeflight_json['channels'][c]['percentage'] = percentage
+      # periodic boundary conditions, so one interpolate between the last time of the day and the first time of the next day
+      datetime_list.append(datetime_list[0]+datetime.timedelta(days=1))
+      percentage_list.append(percentage_list[0])
+      datetime_list.insert(0,datetime_list[-2]-datetime.timedelta(days=1))
+      percentage_list.insert(0,percentage_list[-2])
+
+      # searches the tow times the current time is inbetween and interpolates linear the percentage
+      for i in range(len(datetime_list)-1):
+        if datetime_list[i] < cur_datetime < datetime_list[i+1]:
+          percentage = percentage_list[i]
+          percentage += (percentage_list[i+1]-percentage_list[i])*((cur_datetime-datetime_list[i])/(datetime_list[i+1]-datetime_list[i]))
+               
+                 
+    # moonlight channel
+    # calc current brightness of the moon
+    # percentage is max_moonlight_percentage times moonlight_brightness in percent
+    if not channel['manual'] and channel['moonlight']:
+      print("  moonlight channel")
+      # create moonlight object using the location
+      moon =  pylunar.MoonInfo(latitude=tuple(settings['latitude']), longitude=tuple(settings['longitude']))
+      # feed time (utc time required)
+      moon.update((
+        cur_utc_tm_info.tm_year,
+        cur_utc_tm_info.tm_mon,
+        cur_utc_tm_info.tm_mday,
+        cur_utc_tm_info.tm_hour,
+        cur_utc_tm_info.tm_min,
+        cur_utc_tm_info.tm_sec
+      ))
+      # ratio of the illuminated part of the moon
+      fractional_phase = moon.fractional_phase()
+      print("  fractional phase: %.3f"%(fractional_phase))
+      # hight of the moon at your location
+      altitude = moon.altitude()
+      print("  altitude: %.3f°"%(altitude))
+      
+      percentage = float(channel["max_moonlight_percentage"]) * fractional_phase * math.sin(altitude)
+      # if moon is not visible -> percentage = 0
+      if percentage < 0:
+        percentage = 0
+        
+          
+    # update percentage in the settings
+    settings['channels'][c]['percentage'] = percentage
     print("  percentage: %.3f"%percentage)
-    
-    
-    # value to send
-    pwm_value = int(percentage/100*1023)
-    print("  new pwm value: %d"%pwm_value)
-    print("  old pwm value: %d"%channel['pwm_value'])
-    # update only new one
-    change_of_pwm_value = pwm_value != channel['pwm_value']
-    change_of_pwm_value = True
-    if change_of_pwm_value:
-      reeflight_json['channels'][c]['pwm_value'] = pwm_value
-      payload = "pwm,%d,%d"%(channel['gpio'],pwm_value)
-      print("  send cmd: %s"%payload)
-      client.publish(topic=mqtt_topic,payload=payload,qos=mqtt_qos)
-      time.sleep(0.1)  
-    else:
-      print("  no change")
   
-  print()
+    # send
+    raw_msg = channel['mqtt_msg']
+    # replace variables 
+    raw_msg = raw_msg.replace("percentage", str(percentage)) 
+    # find substrings to calculate 
+    delim_pos = [i for i in range(len(raw_msg)) if raw_msg.startswith('!', i)] 
+    start_pos = delim_pos[::2] 
+    end_pos = delim_pos[1::2] 
+     
+    msg = raw_msg[0:start_pos[0]] 
+    for i in range(len(end_pos)): 
+      msg += str(eval(raw_msg[start_pos[i]+1:end_pos[i]])) 
+      if i < len(end_pos)-1: 
+        msg += raw_msg[end_pos[i]+1:start_pos[i+1]] 
+    msg += raw_msg[end_pos[-1]+1:] 
+    print('  msg: %s'%msg)
+    print('  topic: %s'%settings['mqtt_topic'])
   
+    mqtt_client.publish(topic=settings['mqtt_topic'],payload = msg, qos = settings['mqtt_qos'])
+    time.sleep(0.1)
+
+
+
 if __name__ == "__main__":
   #loads the settings
-  load_reeflight_json()
-  timer = RepeatedTimer(minimum_time_between_updates, update_reeflight)
+  load_settings()
   
-  # start webserver in new thread
-  threading.Thread(target=server.run, kwargs={'host':'0.0.0.0'}).start()
 
+  
   # connect to MQTT broker
-  client = mqtt.Client(mqtt_client_name)
-  
-  client.on_connect = on_connect
-  
-  client.connect(host=mqtt_broker, port=mqtt_port, keepalive=5)
-  threading.Thread(target=client.loop_forever).start()
-  
+  mqtt_client = mqtt.Client(settings['mqtt_client_name'])
+  mqtt_client.on_connect = on_connect
+  mqtt_client.connect(host=settings['mqtt_broker'], port=int(settings['mqtt_port']), keepalive=5)
+  threading.Thread(target=mqtt_client.loop_forever).start()
 
+  # start update timer
+  timer = RepeatedTimer(10, update)
+  timer.start()
+  
+  # start webserver in new thread (accessable from whole network at default port 5000
+  threading.Thread(target=server.run, kwargs={'host':'0.0.0.0'}).start()
 

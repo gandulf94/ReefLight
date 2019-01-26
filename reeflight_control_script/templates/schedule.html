@@ -8,16 +8,17 @@
 
     <script>
     // global variables
-    var jsonBak; // incoming json from server
+    var settings; // incoming json from server
     var chart; // chart for the schedule page
     </script>
     <link rel='stylesheet' href='style.css'/>
   </head>
   <body>
+    {% include 'header.html' %}
     <div id='chart_container' style='height: 500px;'></div>
-    <button onclick='deletePoint();'>Delete Point</button>
-    <button onclick='addPoint();'>Add Point</button>
-    <button onclick='savePoints();'>Save</button>
+    <button onclick='delete_point();'>Delete Point</button>
+    <button onclick='add_point();'>Add Point</button>
+    <button onclick='save_schedule();'>Save</button>
     <script>
       
     function strToDateUTC(str) {
@@ -32,9 +33,13 @@
           return Date.UTC(2000,0,0,0,0,0);
       }
     }
+    
+    
     function format_two_digits(n) {
         return n < 10 ? '0' + n : n;
     }
+    
+    
     function dateUTCToStr(d) {
       d = new Date(d);
       hours = format_two_digits(d.getUTCHours());
@@ -85,25 +90,25 @@
     }
  
     function load_data() {
-      jQuery.getJSON('data.json', 
+      jQuery.getJSON('settings.json', 
       function(json){
         console.log('received JSON:');
         console.log(json);
         
-        jsonBak = json;
+        settings = json;
         // create chart
         create_chart();
         // add data
         console.log('add data to chart')
-        for(c=0;c<json.channels.length;c++) {
-          channel = json.channels[c]
+        for(c=0;c<settings.channels.length;c++) {
+          channel = settings.channels[c]
           if(!channel.moonlight && !channel.manual) {
             console.log('for channel '+c);
             data = new Array();
-            for(i=0;i<channel.dataPoints.length;i++) {
+            for(i=0;i<channel.data_points.length;i++) {
               data.push([ 
-                strToDateUTC(channel.dataPoints[i][0]),
-                channel.dataPoints[i][1]
+                strToDateUTC(channel.data_points[i][0]),
+                channel.data_points[i][1]
               ]);
             }
             chart.addSeries({
@@ -129,7 +134,7 @@
         chart.xAxis[0].addPlotLine({
           color: '#FF0000',
           width: 2,
-          value:  strToDateUTC(json.serverTime)
+          value:  strToDateUTC(settings.server_time)
         }); 
       })
       .fail(function(jqXHR, textStatus, errorThrown) { 
@@ -139,7 +144,7 @@
     
     
     // adds a point
-    function addPoint() {
+    function add_point() {
       p = chart.getSelectedPoints();
       if (p.length == 0) {
         window.alert('Select a point of the channel you want to add a point');
@@ -154,7 +159,7 @@
     }
     
     // removes the selected point
-    function deletePoint() {
+    function delete_point() {
       p = chart.getSelectedPoints();
       if (p.length == 0) {
         window.alert('Select the point first you want to delete');
@@ -170,13 +175,13 @@
     }
     
     // saves the new points
-    function savePoints() {
+    function save_schedule() {
       c_chart = 0
       for(c=0;c<chart.series.length;c++) {
-        if(!jsonBak.channels[c].moonlight) {
-          jsonBak.channels[c].dataPoints = [];
+        if(!settings.channels[c].moonlight) {
+          settings.channels[c].data_points = [];
           for(i=0;i<chart.series[c].data.length;i++) {
-            jsonBak.channels[c].dataPoints.push([
+            settings.channels[c].data_points.push([
               dateUTCToStr(chart.series[c_chart].data[i].x),
               chart.series[c_chart].data[i].y
             ]);
@@ -186,9 +191,9 @@
       }
       
       var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("POST", "/saveConfig");
-      xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      xmlhttp.send(JSON.stringify(jsonBak));
+      xmlhttp.open('POST', '/save');
+      xmlhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+      xmlhttp.send(JSON.stringify(settings));
       
       load_data();
     }

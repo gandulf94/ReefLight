@@ -1,0 +1,157 @@
+{
+  "channels": [
+    {
+      "color": "#0000ff",
+      "data_points": [
+        [
+          "08:15:26",
+          0
+        ],
+        [
+          "08:57:44",
+          7.122302158273379
+        ],
+        [
+          "10:42:31",
+          48.36930455635491
+        ],
+        [
+          "13:34:36",
+          65.63549160671462
+        ],
+        [
+          "17:36:33",
+          63.956834532374096
+        ],
+        [
+          "20:15:41",
+          51.247002398081534
+        ],
+        [
+          "22:17:18",
+          1.9184652278177459
+        ],
+        [
+          "22:57:24",
+          0
+        ]
+      ],
+      "manual": false,
+      "max_moonlight_percentage": "21",
+      "moonlight": false,
+      "mqtt_msg": "pwm,12,!int(1023*percentage/100)!",
+      "name": "blue 1",
+      "percentage": 57.55116834949432
+    },
+    {
+      "color": "#0000ff",
+      "data_points": [
+        [
+          "08:46:29",
+          0
+        ],
+        [
+          "10:39:57",
+          51.007194244604314
+        ],
+        [
+          "13:29:26",
+          66.11510791366906
+        ],
+        [
+          "17:36:33",
+          63.71702637889688
+        ],
+        [
+          "20:19:34",
+          52.44604316546762
+        ],
+        [
+          "22:05:39",
+          5.6834532374100695
+        ],
+        [
+          "22:08:14",
+          0
+        ]
+      ],
+      "manual": false,
+      "max_moonlight_percentage": "12",
+      "moonlight": false,
+      "mqtt_msg": "pwm,15,!int(1023*percentage/100)!",
+      "name": "blue 2",
+      "percentage": 2
+    },
+    {
+      "color": "#949494",
+      "data_points": [
+        [
+          "09:00:43",
+          0
+        ],
+        [
+          "11:09:41",
+          49.80815347721823
+        ],
+        [
+          "13:29:26",
+          68.51318944844124
+        ],
+        [
+          "17:11:58",
+          67.79376498800958
+        ],
+        [
+          "19:34:17",
+          57.961630695443645
+        ],
+        [
+          "20:33:48",
+          41.17505995203837
+        ],
+        [
+          "21:52:43",
+          0
+        ]
+      ],
+      "manual": false,
+      "max_moonlight_percentage": "50",
+      "moonlight": false,
+      "mqtt_msg": "pwm,13,!int(1023*percentage/100)!",
+      "name": "white",
+      "percentage": 2
+    }
+  ],
+  "default_channel": {
+    "color": "#0000FF",
+    "data_points": [
+      [
+        "12:12:12",
+        2
+      ]
+    ],
+    "manual": false,
+    "max_moonlight_percentage": 50,
+    "moonlight": false,
+    "mqtt_msg": "pwm,0,!int(1023*percentage/100)!",
+    "name": "blue_1",
+    "percentage": 0
+  },
+  "latitude": [
+    "2",
+    "2",
+    "2"
+  ],
+  "longitude": [
+    "1",
+    "1",
+    "2"
+  ],
+  "mqtt_broker": "192.168.0.10",
+  "mqtt_client_name": "reeflight_script",
+  "mqtt_port": "1883",
+  "mqtt_qos": 1,
+  "mqtt_topic": "/reeflight/cmd",
+  "seconds_between_updates": "20",
+  "server_time": "12:29:59"
+}

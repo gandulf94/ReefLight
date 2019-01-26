@@ -1,0 +1,243 @@
+<html>
+  <head>
+    <title>ReefLight</title>
+    <script src='jquery-3.3.1.js'></script>
+
+    <script>
+    // global variables
+    var settings; // incoming json from server
+    </script>
+    <link rel='stylesheet' href='style.css'/>
+  </head>
+  <body>
+    {% include 'header.html' %}
+    <table id='general_config_table'></table>
+    <table id='config_channel_table'></table>
+    <button onclick='add_channel();'>add channel</button>
+    <button onclick='save_settings();'>save</button>
+    <script>
+ 
+    function request_settings() {
+
+      jQuery.getJSON('settings.json', 
+      function(json){
+        console.log('received settings:');
+        console.log(json);
+        settings = json;
+        fill_in_settings()
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) { 
+        alert('getJSON request failed! ' + textStatus); 
+      });
+    }
+
+    
+    function fill_in_settings() {
+      console.log('refresh page with current settings');
+      console.log(settings);
+      
+      // fill general_config_table
+      $('#general_config_table tbody').remove(); 
+      var tBody = $('<tbody />').appendTo($('#general_config_table'));   
+      // longitude        
+      var row = $('<tr />').appendTo(tBody);
+      $('<th />', {text: 'longitude [°,\',"]'}).appendTo(row);
+      var input = $('<input />', {
+          'type':'text', 
+          'id':'longitude',
+          'value': settings.longitude[0]+','+settings.longitude[1]+','+settings.longitude[2],
+      })
+      $('<td />', {text: '<input>'})
+        .html(input)
+      .appendTo(row);
+      // latitude        
+      var row = $('<tr />').appendTo(tBody);
+      $('<th />', {text: 'latitude [°,\',"]'}).appendTo(row);
+      var input = $('<input />', {
+          'type':'text', 
+          'id':'latitude',
+          'value': settings.latitude[0]+','+settings.latitude[1]+','+settings.latitude[2],
+      })
+      $('<td />', {text: '<input'})
+        .html(input)
+      .appendTo(row);      
+      // seconds between update
+      var row = $('<tr />').appendTo(tBody);
+      $('<th />', {text: 'time between updates [s]'}).appendTo(row);
+      var input = $('<input />', {
+        'type':'number', 
+        'id':'seconds_between_updates',
+        'value': settings.seconds_between_updates,
+      });
+      $('<td />', {text: '<input'})
+        .html(input)
+      .appendTo(row);         
+      // mqtt broker
+      var row = $('<tr />').appendTo(tBody);
+      $('<th />', {text: 'MQTT broker'}).appendTo(row);
+      var input = $('<input />', {
+        'type':'text', 
+        'id':'mqtt_broker',
+        'value': settings.mqtt_broker,
+      });
+      $('<td />', {text: '<input'})
+        .html(input)
+      .appendTo(row);            
+      // mqtt port
+      var row = $('<tr />').appendTo(tBody);
+      $('<th />', {text: 'MQTT port'}).appendTo(row);
+      var input = $('<input />', {
+        'type':'number', 
+        'id':'mqtt_port',
+        'value': settings.mqtt_port,
+      });
+      $('<td />', {text: '<input'})
+        .html(input)
+      .appendTo(row);          
+      // mqtt topic
+      var row = $('<tr />').appendTo(tBody);
+      $('<th />', {text: 'MQTT topic'}).appendTo(row);
+      var input = $('<input />', {
+        'type':'text', 
+        'id':'mqtt_topic',
+        'value': settings.mqtt_topic,
+      });
+      $('<td />', {text: '<input'})
+        .html(input)
+      .appendTo(row);       
+      
+      
+      // fill config_channel_table
+      $('#config_channel_table tbody').remove(); 
+      var tBody = $('<tbody />').appendTo($('#config_channel_table'));      
+      // table header
+      if(settings.channels.length != 0) {
+        var row = $('<tr />').appendTo(tBody);
+        $('<th />', {text: 'channel'}).appendTo(row);
+        $('<th />', {text: 'name'}).appendTo(row);
+        $('<th />', {text: 'color'}).appendTo(row);
+        $('<th />', {text: 'MQTT message'}).appendTo(row);
+        $('<th />', {text: 'moonlight'}).appendTo(row);
+        $('<th />', {text: 'max moonlight percentage'}).appendTo(row);
+        $('<th />', {text: 'delete'}).appendTo(row);
+      }
+      // table rows
+      for(c=0; c<settings.channels.length; c++) {
+        channel = settings.channels[c]
+        var row = $('<tr />').appendTo(tBody);
+        // number
+        $('<td />', {text: c+1}).appendTo(row);
+        // name
+        var input = $('<input />', {
+          'type':'text', 
+          'id':'name_'+c,
+          'value': channel.name,
+        })
+        $('<td />', {text: '<input>'})
+          .html(input)
+        .appendTo(row);
+        
+        // color
+        var input = $('<input />', {
+          'type':'color', 
+          'id':'color_'+c,
+          'value': channel.color,
+        });
+        $('<td />', {text: '<input>'})
+          .html(input)
+        .appendTo(row);
+        
+        // mqtt_msg
+        var input = $('<input />', {
+          'type':'text', 
+          'id':'mqtt_msg_'+c,
+          'value': channel.mqtt_msg,
+        });
+        $('<td />', {text: '<input>'})
+          .html(input)
+        .appendTo(row);   
+               
+        // moonlight checkbox
+        var input = $('<input />', {
+          'type':'checkbox', 
+          'id':'moonlight_'+c,
+          'checked':channel.moonlight,
+        });
+        $('<td />', {text: '<input>'})
+          .html(input)
+        .appendTo(row); 
+        
+        // max_moonlight_percentage
+        var input = $('<input />', {
+          'type':'number', 
+          'id':'max_moonlight_percentage_'+c,
+          'value': channel.max_moonlight_percentage,
+        });
+        $('<td />', {text: '<input>'})
+          .html(input)
+        .appendTo(row); 
+      
+        // delete_button
+        var input=$('<input/>', {
+            type: 'button',
+            id: 'delete_'+c,
+            onclick: 'delete_channel('+c+')'
+        });
+        $('<td />', {text: '<input>'})
+          .html(input)
+        .appendTo(row); 
+      
+      }
+
+      
+    }
+    
+    // deletes a channel
+    function delete_channel(c) {
+      console.log('delete channel '+c);
+      settings.channels.splice(c, 1);
+      fill_in_settings();
+    }
+    
+    // adds a channel
+    function add_channel() {
+      console.log('add new channel');
+      settings.channels.push(JSON.parse(JSON.stringify(settings.default_channel)));
+      fill_in_settings();
+    }
+    
+    // saves the settings
+    function save_settings() {
+      // general_config_table
+      
+      settings.longitude = $('#longitude').val().split(',');
+      settings.latitude = $('#latitude').val().split(',');
+      settings.seconds_between_updates = $('#seconds_between_updates').val();
+      settings.mqtt_broker = $('#mqtt_broker').val();
+      settings.mqtt_port = $('#mqtt_port').val();
+      settings.mqtt_topic = $('#mqtt_topic').val();
+      
+      // config_channel_table
+      for(c=0;c<settings.channels.length;c++) {
+        settings.channels[c].name = $('#name_'+c).val();
+        settings.channels[c].color = $('#color_'+c).val();
+        settings.channels[c].mqtt_msg = $('#mqtt_msg_'+c).val();
+        settings.channels[c].moonlight = $('#moonlight_'+c).prop('checked')
+        settings.channels[c].max_moonlight_percentage = $('#max_moonlight_percentage_'+c).val();
+
+      }
+
+      console.log('save settings:');
+      console.log(settings);
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.open('POST', '/save');
+      xmlhttp.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+      xmlhttp.send(JSON.stringify(settings));
+      
+      request_settings();
+    }
+    
+    request_settings();
+    </script>
+  </body>
+</html>

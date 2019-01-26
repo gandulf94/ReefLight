@@ -2,7 +2,7 @@
   "channels": [
     {
       "color": "#0000FF",
-      "dataPoints": [
+      "data_points": [
         [
           "08:52:11",
           0
@@ -39,110 +39,20 @@
       "gpio": 12,
       "manual": false,
       "manual_percentage": 66.9516905468771,
-      "maxMoonlightPercentage": 66.1,
+      "max_moonlight_percentage": 66.1,
       "moonlight": false,
+      "max_pwm_value": 1023,
       "name": "blue_1",
       "percentage": 70.94278876189051,
       "pwm_value": 725
     },
-    {
-      "color": "#0000FF",
-      "dataPoints": [
-        [
-          "07:54:21",
-          0
-        ],
-        [
-          "09:19:15",
-          6.258992805755401
-        ],
-        [
-          "11:03:02",
-          46.21103117505995
-        ],
-        [
-          "12:36:23",
-          66.5947242206235
-        ],
-        [
-          "14:36:43",
-          73.78896882494004
-        ],
-        [
-          "17:22:19",
-          73.06954436450839
-        ],
-        [
-          "19:21:21",
-          66.11510791366906
-        ],
-        [
-          "20:53:12",
-          45.25179856115108
-        ],
-        [
-          "22:05:39",
-          4.484412470023978
-        ],
-        [
-          "22:58:42",
-          0
-        ]
-      ],
-      "gpio": 15,
-      "manual": false,
-      "manual_percentage": 52.9949778708649,
-      "moonlight": false,
-      "moonlightAmplitude": 0.3,
-      "name": "blue_2",
-      "percentage": 25.9949778708649,
-      "pwm_value": 265
-    },
-    {
-      "color": "#929292",
-      "dataPoints": [
-        [
-          "09:15:52",
-          0
-        ],
-        [
-          "11:13:06",
-          43.18944844124701
-        ],
-        [
-          "12:50:25",
-          61.558752997601914
-        ],
-        [
-          "14:34:07",
-          68.03357314148681
-        ],
-        [
-          "17:00:19",
-          67.55395683453237
-        ],
-        [
-          "18:39:56",
-          63.23741007194244
-        ],
-        [
-          "20:28:37",
-          43.57314148681055
-        ],
-        [
-          "21:35:54",
-          0
-        ]
-      ],
-      "gpio": 13,
-      "manual": false,
-      "manual_percentage": 12.6357246646919,
-      "moonlight": false,
-      "moonlightAmplitude": 0.3,
-      "name": "white",
-      "percentage": 12.6357246646919,
-      "pwm_value": 129
-    }
+   
   ],
-  "serverTime": "18:48:06"
+  "serverTime": "18:48:06",
+  "seconds_between_updates": 10,
+  "mqtt_client_name" = "test",
+  "mqtt_broker" = "192.168.0.10",
+  "mqtt_port" = 1883,
+  "mqtt_topic" = "/reeflight/cmd",
+  "mqtt_qos" = 1
 }
