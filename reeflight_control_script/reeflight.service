@@ -5,7 +5,7 @@ After=multi-user.target
 [Service]
 Type=idle
 WorkingDirectory=/home/pi/ReefLight/reeflight_control_script
-ExecStart=/usr/bin/python3 /home/pi/ReefLight/reeflight_control_script/reeflight_control_script.py
+ExecStart=/usr/bin/python3 /home/pi/ReefLight/reeflight_control/reeflight_control.py
 
 [Install]
 WantedBy=multi-user.target
