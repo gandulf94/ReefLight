@@ -21,9 +21,10 @@
           var tBody = $('<tbody />').appendTo($('#manual_table'));      
           for(c=0; c<settings.channels.length; c++) {
             channel = settings.channels[c]
-            val = channel.percentage;
+
             var row = $('<tr />').appendTo(tBody);
-            // name
+            
+	    // name
             $('<td />', {text: channel.name}).appendTo(row);
             // manual mode checkbox
             var input = $('<input />', {
@@ -40,7 +41,7 @@
               .html($('<input />', {
                 'type':'range', 
                 'id':'percentage_'+c, 
-                'value':+val,
+                'value':+channel.val,
                 'onchange':'update('+c+',true,false)'
               }))
             .appendTo(row);

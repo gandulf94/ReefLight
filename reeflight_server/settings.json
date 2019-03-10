@@ -41,7 +41,7 @@
       "moonlight": false,
       "mqtt_msg": "pwm,12,!int(1023*percentage/100)!",
       "name": "blue 1",
-      "percentage": 58.90038905385679
+      "percentage": 42.1564108873746
     },
     {
       "color": "#0000ff",
@@ -75,12 +75,12 @@
           0
         ]
       ],
-      "manual": false,
+      "manual": true,
       "max_moonlight_percentage": "12",
       "moonlight": false,
       "mqtt_msg": "pwm,15,!int(1023*percentage/100)!",
       "name": "blue 2",
-      "percentage": 35.1843841680114
+      "percentage": 0.676384915710706
     },
     {
       "color": "#949494",
@@ -114,12 +114,12 @@
           0
         ]
       ],
-      "manual": false,
+      "manual": true,
       "max_moonlight_percentage": "50",
       "moonlight": false,
       "mqtt_msg": "pwm,13,!int(1023*percentage/100)!",
       "name": "white",
-      "percentage": 52.82939674552183
+      "percentage": 0.489164870571216
     }
   ],
   "default_channel": {
@@ -153,5 +153,5 @@
   "mqtt_qos": 1,
   "mqtt_topic": "reef/reeflight/cmd",
   "seconds_between_updates": "20",
-  "server_time": "18:54:25"
+  "server_time": "13:56:01"
 }

@@ -1,0 +1,11 @@
+[Unit]
+Description=ReefLight Control script
+After=multi-user.target
+
+[Service]
+Type=idle
+WorkingDirectory=/home/pi/ReefLight/reeflight_server
+ExecStart=/usr/bin/python3 reeflight_server.py
+
+[Install]
+WantedBy=multi-user.target
