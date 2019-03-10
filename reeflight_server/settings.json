@@ -39,9 +39,10 @@
       "manual": false,
       "max_moonlight_percentage": "21",
       "moonlight": false,
-      "mqtt_msg": "pwm,12,!int(1023*percentage/100)!",
+      "mqtt_cmd": "pwm,12,%d",
+      "mqtt_msg": "",
       "name": "blue 1",
-      "percentage": 42.1564108873746
+      "percentage": 62.960942128043605
     },
     {
       "color": "#0000ff",
@@ -75,12 +76,13 @@
           0
         ]
       ],
-      "manual": true,
+      "manual": false,
       "max_moonlight_percentage": "12",
       "moonlight": false,
-      "mqtt_msg": "pwm,15,!int(1023*percentage/100)!",
+      "mqtt_cmd": "pwm,15,%d",
+      "mqtt_msg": "",
       "name": "blue 2",
-      "percentage": 0.676384915710706
+      "percentage": 61.24833660600808
     },
     {
       "color": "#949494",
@@ -114,12 +116,13 @@
           0
         ]
       ],
-      "manual": true,
+      "manual": false,
       "max_moonlight_percentage": "50",
       "moonlight": false,
-      "mqtt_msg": "pwm,13,!int(1023*percentage/100)!",
+      "mqtt_cmd": "pwm,13,%d",
+      "mqtt_msg": "",
       "name": "white",
-      "percentage": 0.489164870571216
+      "percentage": 0.1167926326403
     }
   ],
   "default_channel": {
@@ -133,7 +136,7 @@
     "manual": false,
     "max_moonlight_percentage": 50,
     "moonlight": false,
-    "mqtt_msg": "pwm,0,!int(1023*percentage/100)!",
+    "mqtt_cmd": "pwm,0,%d",
     "name": "blue_1",
     "percentage": 0
   },
@@ -153,5 +156,5 @@
   "mqtt_qos": 1,
   "mqtt_topic": "reef/reeflight/cmd",
   "seconds_between_updates": "20",
-  "server_time": "13:56:01"
+  "server_time": "15:12:55"
 }

@@ -7,7 +7,10 @@
   </head>
   <body>
     {% include 'header.html' %}
+    <div id='content'>
     <table id='manual_table' ></table>
+    </div>
+    
     <script>
     function load_data() {    
       jQuery.getJSON('settings.json', 
@@ -24,7 +27,7 @@
 
             var row = $('<tr />').appendTo(tBody);
             
-	    // name
+            // name
             $('<td />', {text: channel.name}).appendTo(row);
             // manual mode checkbox
             var input = $('<input />', {
@@ -41,7 +44,7 @@
               .html($('<input />', {
                 'type':'range', 
                 'id':'percentage_'+c, 
-                'value':+channel.val,
+                'value':+channel.percentage,
                 'onchange':'update('+c+',true,false)'
               }))
             .appendTo(row);
@@ -75,6 +78,7 @@
       load_data(); 
       
     }
+    
     load_data();
     </script>
   </body>

@@ -69,6 +69,8 @@ def server_config_to_client():
 # serves the json file
 @server.route("/settings.json")
 def serve_settings_to_client():
+  # update to get the current settings
+  update()
   # adds the localtime
   settings["server_time"] = time.strftime("%H:%M:%S", time.localtime())
   return json.dumps(settings,indent=2, sort_keys=True)
@@ -79,7 +81,7 @@ def save():
   global settings
   settings = request.json
   save_settings()
-  update()
+  update_and_send()
   return ''
   
   
@@ -234,34 +236,24 @@ def update():
     settings['channels'][c]['percentage'] = percentage
     print("  percentage: %.3f"%percentage)
   
-    # send
-    raw_msg = channel['mqtt_msg']
-    # replace variables 
-    raw_msg = raw_msg.replace("percentage", str(percentage)) 
-    # find substrings to calculate 
-    delim_pos = [i for i in range(len(raw_msg)) if raw_msg.startswith('!', i)] 
-    start_pos = delim_pos[::2] 
-    end_pos = delim_pos[1::2] 
-     
-    msg = raw_msg[0:start_pos[0]] 
-    for i in range(len(end_pos)): 
-      msg += str(eval(raw_msg[start_pos[i]+1:end_pos[i]])) 
-      if i < len(end_pos)-1: 
-        msg += raw_msg[end_pos[i]+1:start_pos[i+1]] 
-    msg += raw_msg[end_pos[-1]+1:] 
-    print('  msg: %s'%msg)
-    print('  topic: %s'%settings['mqtt_topic'])
+
+def send():
+    for c, channel in enumerate(settings['channels']):
+      msg = channel['mqtt_cmd']%(1023*channel['percentage']/100)
+      
+      print('  msg: %s'%msg)
+      print('  topic: %s'%settings['mqtt_topic'])
+    
+      mqtt_client.publish(topic=settings['mqtt_topic'],payload = msg, qos = settings['mqtt_qos'])
+      time.sleep(0.2)
+
+def update_and_send():
+  update()
+  send()
   
-    mqtt_client.publish(topic=settings['mqtt_topic'],payload = msg, qos = settings['mqtt_qos'])
-    time.sleep(0.1)
-
-
-
 if __name__ == "__main__":
   #loads the settings
   load_settings()
-  
-
   
   # connect to MQTT broker
   mqtt_client = mqtt.Client(settings['mqtt_client_name'])
@@ -270,7 +262,7 @@ if __name__ == "__main__":
   threading.Thread(target=mqtt_client.loop_forever).start()
 
   # start update timer
-  timer = RepeatedTimer(10, update)
+  timer = RepeatedTimer(10, update_and_send)
   timer.start()
   
   # start webserver in new thread (accessable from whole network at default port 5000
