@@ -150,7 +150,7 @@
     "1",
     "2"
   ],
-  "mqtt_broker": "192.168.0.10",
+  "mqtt_broker": "localhost",
   "mqtt_client_name": "reeflight_control_script",
   "mqtt_port": "1883",
   "mqtt_qos": 1,
