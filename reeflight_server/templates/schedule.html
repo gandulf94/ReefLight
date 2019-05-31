@@ -78,16 +78,20 @@
             format: '{value:%H:%M}'
           },
         },
-        yAxis: {
-          max: 100,
+        yAxis:{
+          max: 1,
           min: 0,
           gridLineWidth: 1,
+          title: {
+            text: 'PWM'
+          },
           labels: {
-            format: '{value}%'
+            format: '{value}'
           }
         },
       });
     }
+ 
  
     function load_data() {
       jQuery.getJSON('settings.json', 
@@ -96,17 +100,19 @@
         console.log(json);
         
         settings = json;
+        
         // create chart
         create_chart();
+        
         // add data
         console.log('add data to chart')
         for(c=0;c<settings.channels.length;c++) {
           channel = settings.channels[c]
           if(!channel.moonlight && !channel.manual) {
             console.log('for channel '+c);
-            data = new Array();
+            pwm_data = new Array();
             for(i=0;i<channel.data_points.length;i++) {
-              data.push([ 
+              pwm_data.push([ 
                 strToDateUTC(channel.data_points[i][0]),
                 channel.data_points[i][1]
               ]);
@@ -124,12 +130,17 @@
               dragMinX: strToDateUTC('00:00:00'),
               dragMaxX: strToDateUTC('23:59:59'),
               dragMinY: 0,
-              dragMaxY: 100,
+              dragMaxY: 1,
               allowPointSelect: true,
-              data: data,
+              data: pwm_data,
             });          
           }
         }
+        
+            
+            
+
+        
         // add current time
         chart.xAxis[0].addPlotLine({
           color: '#FF0000',

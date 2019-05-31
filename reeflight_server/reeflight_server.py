@@ -58,11 +58,6 @@ def serve_index_to_client():
 @server.route('/schedule.html')
 def serve_schedule_to_client():
   return render_template('schedule.html')
-
-# config -> config the general settings (number of channels etc.)
-@server.route('/config.html')
-def server_config_to_client():
-  return render_template('config.html')
   
 
 
@@ -118,11 +113,9 @@ def serve_highcharts_draggable_points_to_client():
 #
 def on_connect(client, userdata, flags, rc):
   print("connected to mqtt broker with result code "+str(rc))
-  # Subscribing in on_connect() means that if we lose the connection and
-  # reconnect then subscriptions will be renewed.
   
   
-# repeatedTimer for the update function
+# repeatedTimer class for the update
 class RepeatedTimer(object):
   def __init__(self, interval, function, *args, **kwargs):
     self._timer     = None
@@ -165,49 +158,50 @@ def update():
   # loop over all channels
   for c, channel in enumerate(settings['channels']):
     
-    print("channel %d, %s"%(c,channel["name"]))
+    print("   channel %d, %s"%(c,channel["name"]))
     
     # no update of the percentage in manual mode
     if channel['manual']:
-      print("  manual mode, no update")
-      percentage = channel["percentage"]
+      print("    manual mode, no update")
+      pwm = channel["pwm"]
     
-    # normal channel
-    # new percentage updated via interpolation of the data_points
+    
+    
+    # normal channel (new percentage calculated via interpolation of the data_points)
     if not channel['manual'] and not channel['moonlight']:
       
     # normal channel
-    # new percentage updated via interpolation of the data_points
-      print("  regular channel")
-      
-      # interpolate the percentage using the percentage time paires stored in dataPoints
-      
+    # new percentage updated via linear interpolation of the data_points
+      print("    regular channel")
+            
       # first load percentage and time values into the lists datetime_list and percentage_list
-      datetime_list, percentage_list = [],[]
+      datetime_list, pwm_list = [],[]
       for i in channel["data_points"]:
         # list of datetime.datetime values
         datetime_list.append(datetime.datetime.combine(cur_datetime.date(),datetime.time(*map(int, i[0].split(':')))))
         # list of % values
-        percentage_list.append(float(i[1]))
+        pwm_list.append(float(i[1]))
         
       # periodic boundary conditions, so one interpolate between the last time of the day and the first time of the next day
       datetime_list.append(datetime_list[0]+datetime.timedelta(days=1))
-      percentage_list.append(percentage_list[0])
+      pwm_list.append(pwm_list[0])
       datetime_list.insert(0,datetime_list[-2]-datetime.timedelta(days=1))
-      percentage_list.insert(0,percentage_list[-2])
+      pwm_list.insert(0,pwm_list[-2])
 
-      # searches the tow times the current time is inbetween and interpolates linear the percentage
+      # searches the two times the current time is inbetween and interpolates linear the pwm value
       for i in range(len(datetime_list)-1):
         if datetime_list[i] < cur_datetime < datetime_list[i+1]:
-          percentage = percentage_list[i]
-          percentage += (percentage_list[i+1]-percentage_list[i])*((cur_datetime-datetime_list[i])/(datetime_list[i+1]-datetime_list[i]))
+          pwm = pwm_list[i]
+          pwm += (pwm_list[i+1]-pwm_list[i])*((cur_datetime-datetime_list[i])/(datetime_list[i+1]-datetime_list[i]))
                
+       
+       
                  
     # moonlight channel
     # calc current brightness of the moon
     # percentage is max_moonlight_percentage times moonlight_brightness in percent
     if not channel['manual'] and channel['moonlight']:
-      print("  moonlight channel")
+      print("    moonlight channel")
       # create moonlight object using the location
       moon =  pylunar.MoonInfo(latitude=tuple(settings['latitude']), longitude=tuple(settings['longitude']))
       # feed time (utc time required)
@@ -221,31 +215,40 @@ def update():
       ))
       # ratio of the illuminated part of the moon
       fractional_phase = moon.fractional_phase()
-      print("  fractional phase: %.3f"%(fractional_phase))
+      print("    fractional phase: %.3f"%(fractional_phase))
       # hight of the moon at your location
       altitude = moon.altitude()
-      print("  altitude: %.3f°"%(altitude))
+      print("    altitude: %.3f°"%(altitude))
       
-      percentage = float(channel["max_moonlight_percentage"]) * fractional_phase * math.sin(altitude)
+      pwm = float(channel["max_moonlight_pwm"]) * fractional_phase * math.sin(altitude)
       # if moon is not visible -> percentage = 0
-      if percentage < 0:
-        percentage = 0
+      if pwm < 0:
+        pwm = 0
         
           
     # update percentage in the settings
-    settings['channels'][c]['percentage'] = percentage
-    print("  percentage: %.3f"%percentage)
+    settings['channels'][c]['pwm'] = pwm
+    print("    pwm: %.3f"%pwm)
+    
+  # calculate current power
+  settings['power'] = 0
+  for channel in settings['channels']:
+    settings['power'] += channel['max_power']*channel['pwm']
+  print('  power [watt]: %.2f'%settings['power'])
+  print()
   
 
 def send():
-    for c, channel in enumerate(settings['channels']):
-      msg = channel['mqtt_cmd']%(1023*channel['percentage']/100)
-      
-      print('  msg: %s'%msg)
-      print('  topic: %s'%settings['mqtt_topic'])
+  print("send at %s"%datetime.datetime.now())
+  time.sleep(0.1)
+  for c, channel in enumerate(settings['channels']):
+    msg = channel['mqtt_cmd']%(1023*channel['pwm'])
     
-      mqtt_client.publish(topic=settings['mqtt_topic'],payload = msg, qos = settings['mqtt_qos'])
-      time.sleep(0.2)
+    print('  topic: %s, msg: %s'%(settings['mqtt_topic'],msg))
+  
+    mqtt_client.publish(topic=settings['mqtt_topic'],payload = msg, qos = settings['mqtt_qos'])
+    time.sleep(0.1)
+  print()
 
 def update_and_send():
   update()
@@ -258,7 +261,7 @@ if __name__ == "__main__":
   # connect to MQTT broker
   mqtt_client = mqtt.Client(settings['mqtt_client_name'])
   mqtt_client.on_connect = on_connect
-  mqtt_client.connect(host=settings['mqtt_broker'], port=int(settings['mqtt_port']), keepalive=5)
+  mqtt_client.connect(host=settings['mqtt_broker'], port=int(settings['mqtt_port']))
   threading.Thread(target=mqtt_client.loop_forever).start()
 
   # start update timer
