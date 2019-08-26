@@ -44,7 +44,7 @@
       "mqtt_msg": "",
       "name": "blue 1",
       "percentage": 16,
-      "pwm": 0
+      "pwm": 0.630516667796794
     },
     {
       "color": "#0000ff",
@@ -85,7 +85,7 @@
       "mqtt_cmd": "pwm,15,%d",
       "mqtt_msg": "",
       "name": "blue 2",
-      "pwm": 0.5101374764390204
+      "pwm": 0.6073714440788612
     },
     {
       "color": "#949494",
@@ -126,7 +126,7 @@
       "mqtt_cmd": "pwm,13,%d",
       "mqtt_msg": "",
       "name": "white",
-      "pwm": 0.4716330769894344
+      "pwm": 0.5867146011160953
     }
   ],
   "latitude": [
@@ -144,7 +144,7 @@
   "mqtt_port": "1883",
   "mqtt_qos": 1,
   "mqtt_topic": "reef/reeflight/cmd",
-  "power": 19.6354110685691,
+  "power": 29.881759565595832,
   "seconds_between_updates": "20",
-  "server_time": "11:46:41"
+  "server_time": "16:45:27"
 }

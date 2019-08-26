@@ -1,4 +1,4 @@
-#!bin/python3
+#!/usr/bin/python3
 
 from flask import Flask, request, render_template
 import json
