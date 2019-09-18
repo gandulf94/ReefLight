@@ -39,4 +39,4 @@ or
 * via Docker  
 Build the Docker image with
 `docker build -t reeflight .` inside the git-repo and start a container with 
-`docker run -dit --restart always  --net=host reeflight`
+`docker run -dit --restart always  --net=host -v /etc/localtime:/etc/localtime reeflight`
