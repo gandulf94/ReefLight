@@ -40,4 +40,3 @@ or
 Build the Docker image with
 `docker build -t reeflight .` inside the git-repo and start a container with 
 `docker run -dit --restart always  --net=host reeflight`
-or use the Docker image from [Dockerhub](hub.docker.com)
